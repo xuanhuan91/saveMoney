@@ -6,7 +6,7 @@
 {{--        @endif--}}
 {{--    </ul>--}}
 {{--@endforeach--}}
-
+@extends('layouts.app')
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -88,13 +88,15 @@
         @yield('content')
         @foreach($parentCategoryExpense as $parentCategory)
             <ul class="list-group">
-                <li class="list-group-item"><a>{{$parentCategory->name}}</a></li>
-                @if(count($parentCategory->subcategory))
-                    @include('CategoryExpense.sub_category_list',['subcategories' => $parentCategory->subcategory])
-                @endif
+                <li class="list-group-item"><a>{{$parentCategory->name}}</a>
+                        <li class="list-group-item">
+                            @if(count($parentCategory->subcategory))
+                                @include('CategoryExpense.sub_category_list',['subcategories' => $parentCategory->subcategory])
+                            @endif
+                        </li>
+                </li>
             </ul>
         @endforeach
-
     </main>
 </div>
 </body>
