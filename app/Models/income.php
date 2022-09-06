@@ -12,4 +12,9 @@ class income extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    public function categoryIncome()
+    {
+        return $this->belongsTo(categoryIncome::class, 'id', 'categoryIncomeId');
+    }
 }

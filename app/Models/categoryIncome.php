@@ -12,4 +12,9 @@ class categoryIncome extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    public function categoryIncome()
+    {
+        return $this->hasMany(income::class, 'categoryIncomeId');
+    }
 }
