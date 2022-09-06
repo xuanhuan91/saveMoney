@@ -15,6 +15,6 @@ class categoryExpense extends Model
     protected $fillable = ['name', 'parent_id'];
 
     public function subcategory(){
-        return $this->hasMany('App\categoryExpense', 'parent_id');
+        return $this->hasMany('App\Models\categoryExpense', 'parent_id');
     }
 }
