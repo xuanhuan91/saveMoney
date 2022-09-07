@@ -18,10 +18,10 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-md-6">
-        <img src="img/img.png" style="width: 100%;">
+    <div class="col-md-6" style="background-color: #2C73EB;">
+        <img src="img/img.png" style=" overflow: hidden; height: 95vh;float: right">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 align-self-center">
         @yield('content')
     </div>
 </div>

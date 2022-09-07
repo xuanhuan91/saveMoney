@@ -6,11 +6,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div>
-                <br><br>
                 <a href="{{route('login')}}" style="margin-left: -50px">
                     <button class="col btn btn-outline-primary border-0" style="--bs-btn-hover-color: #0d6efd;--bs-btn-border-color: #f8fafc;--bs-btn-hover-bg: #f8fafc">Trở về</button>
                 </a>
-                <br><br>
                 <div>
                     <h3 class="fw-bolder">{{ __('Đăng ký') }}</h3>
                     <form method="POST" action="{{ route('register') }}">
