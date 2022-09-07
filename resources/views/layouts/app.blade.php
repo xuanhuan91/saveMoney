@@ -61,7 +61,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{route('user.index')}}">Thông tin tài khoản <span class="sr-only"></span></a>
                 </li>
-
             </ul>
         </nav>
     </div>
@@ -130,23 +129,14 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-
                             @yield('modalBody')
-
-
-
-
                             <div class="modal-footer border border-white">
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
-
         <script>
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')
