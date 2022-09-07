@@ -6,7 +6,6 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div>
-                <br><br><br><br>
                 <div>
                     <img src="img/img_1.png" style="width: 10%;padding-bottom: 40px">
                     <h3 class="fw-bolder">{{ __('Đăng nhập') }}</h3>
