@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('category_expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->Integer('subCategoryiD')->nullable();
+            $table->unsignedInteger('parent_id')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });
