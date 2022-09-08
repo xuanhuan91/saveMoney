@@ -15,6 +15,6 @@ class income extends Model
 
     public function categoryIncome()
     {
-        return $this->belongsTo(categoryIncome::class, 'id', 'categoryIncomeId');
+        return $this->belongsTo(categoryIncome::class, 'categoryIncomeId');
     }
 }

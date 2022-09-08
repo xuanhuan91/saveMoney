@@ -14,7 +14,13 @@ class categoryExpense extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['name', 'parent_id'];
 
-    public function subcategory(){
-        return $this->hasMany('App\categoryExpense', 'parent_id');
+    public function subcategory()
+    {
+        return $this->hasMany(categoryExpense::class, 'parent_id');
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(expense::class, 'categoryExpenseId');
     }
 }
