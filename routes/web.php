@@ -1,8 +1,7 @@
 <?php
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
-use App\Models\Expense;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +25,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('user', \App\Http\Controllers\userController::class);
+Route::get('/categoryExpense', 'App\Http\Controllers\CategoryExpenseController@index');
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 Route::resource("expense", App\Http\Controllers\ExpenseController::class);
 
