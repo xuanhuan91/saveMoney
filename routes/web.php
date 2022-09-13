@@ -21,4 +21,4 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('user', \App\Http\Controllers\userController::class);
-Route::get('/categoryExpense', 'App\Http\Controllers\CategoryExpenseController@index');
+Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
