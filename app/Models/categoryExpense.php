@@ -22,5 +22,6 @@ class categoryExpense extends Model
     public function expenses()
     {
         return $this->hasMany(expense::class, 'categoryExpenseId');
+
     }
 }

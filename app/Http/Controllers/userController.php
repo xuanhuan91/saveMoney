@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\categoryExpense;
 use Illuminate\Http\Request;
+use App\Models;
 
-class CategoryExpenseController extends Controller
+class userController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,9 @@ class CategoryExpenseController extends Controller
      */
     public function index()
     {
-        $parentCategoryExpense = \App\Models\categoryExpense::where('parent_id', 0)->get();
-        return view('categoryExpense.index', compact('parentCategoryExpense'));
+        //
+        $user = auth()->user();
+        return view('userInfo.index',compact('user'));
     }
 
     /**
@@ -42,10 +43,10 @@ class CategoryExpenseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\categoryExpense  $categoryExpense
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(categoryExpense $categoryExpense)
+    public function show($id)
     {
         //
     }
@@ -53,10 +54,10 @@ class CategoryExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\categoryExpense  $categoryExpense
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(categoryExpense $categoryExpense)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +66,10 @@ class CategoryExpenseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\categoryExpense  $categoryExpense
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categoryExpense $categoryExpense)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +77,10 @@ class CategoryExpenseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\categoryExpense  $categoryExpense
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(categoryExpense $categoryExpense)
+    public function destroy($id)
     {
         //
     }
