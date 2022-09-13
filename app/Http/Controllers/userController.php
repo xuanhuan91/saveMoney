@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Models;
+use Illuminate\Support\Facades\Hash;
 
 class userController extends Controller
 {
@@ -72,6 +74,17 @@ class userController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Models\User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $password = $request->input('password');
+        if($password != $user->password){
+            $user->password = Hash::make($request->input('password'));
+        }
+        $user->save();
+
+        return redirect(route('user.index'));
+
     }
 
     /**

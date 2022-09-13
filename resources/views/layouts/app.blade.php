@@ -53,7 +53,7 @@
                     <a class="nav-link" href="/">Quản lý khoản chi <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Quản lý báo cáo <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{route('report-month')}}">Quản lý báo cáo <span class="sr-only"></span></a>
                 </li>
                 <li>
                     <hr class="table-group-divider" style="width: 150%">
