@@ -19,10 +19,7 @@ Route::get('/register',function (){return view('auth.register');})->name('regist
 
 Auth::routes();
 
-
-Route::get('/report/month', [App\Http\Controllers\ReportController::class, 'reportByMonth'])->name('report-month');
-Route::get('/report/week', [App\Http\Controllers\ReportController::class, 'reportByWeek'])->name('report-week');
-Route::get('/categoryExpense', 'CategoryExpenseController@index');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('user', \App\Http\Controllers\userController::class);
+Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 

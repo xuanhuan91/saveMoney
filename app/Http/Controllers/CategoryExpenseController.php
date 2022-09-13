@@ -25,7 +25,7 @@ class CategoryExpenseController extends Controller
      */
     public function create()
     {
-        //
+        return view('CategoryExpense.create');
     }
 
     /**
@@ -70,7 +70,18 @@ class CategoryExpenseController extends Controller
      */
     public function update(Request $request, categoryExpense $categoryExpense)
     {
-        //
+        $this->validate($request,
+            [
+                'name' => 'required|min:5|max:500'
+            ]);
+        $name = $request->name;
+
+        $cate = Models\CategoryExpense::find($id);
+        $cate->name = $name;
+        $cate->save();
+
+        $request->session()->flash('success', 'Category updated sucessfully.');
+        return redirect(route('category.index'));
     }
 
     /**
