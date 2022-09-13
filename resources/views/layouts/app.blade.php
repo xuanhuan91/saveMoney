@@ -27,10 +27,10 @@
             <div class="navbar navbar-light bg-white">
                 <ul class="navbar-nav justify-content-end flex-grow-1 ps-4">
                     <li class="nav-item active">
-                        <img src="img/img_1.png" style="width: 32px">
+                        <img src="{{ URL::to('/') }}/img/img_1.png" style="width: 32px"/>
                     </li>
                     <li class="nav-item active">
-                        <img src="img/img_2.png" style="width: 79px; padding-left: 10px;padding-top: 10px">
+                        <img src="{{ URL::to('/') }}/img/img_2.png" style="width: 79px"/>
                     </li>
                     <li>
                         <hr class="table-group-divider" style="width: 150%">

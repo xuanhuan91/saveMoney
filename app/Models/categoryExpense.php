@@ -16,7 +16,7 @@ class categoryExpense extends Model
 
     public function subcategory()
     {
-        return $this->hasMany(categoryExpense::class, 'parent_id');
+        return $this->hasMany(categoryExpense::class, 'subCategoryiD');
     }
 
     public function expenses()

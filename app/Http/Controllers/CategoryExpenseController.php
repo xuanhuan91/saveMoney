@@ -14,7 +14,7 @@ class CategoryExpenseController extends Controller
      */
     public function index()
     {
-        $parentCategoryExpense = \App\Models\categoryExpense::where('parent_id', 0)->get();
+        $parentCategoryExpense = \App\Models\categoryExpense::where('subCategoryiD', 0)->get();
         return view('categoryExpense.index', compact('parentCategoryExpense'));
     }
 
