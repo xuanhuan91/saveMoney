@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +25,4 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::resource('user', \App\Http\Controllers\userController::class);
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 
+Route::resource("expense", \App\Http\Controllers\ExpenseController::class);
