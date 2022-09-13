@@ -36,7 +36,19 @@ class CategoryExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,
+            [
+                'name' => 'required|min:5|max:500'
+            ]);
+        $name = $request->input('name');
+
+        $cate = new Models\categoryExpense();
+        $cate->name =$name;
+        $cate->save();
+
+        $request->session()->flash('success', 'New Expense category created successfully');
+
+        return redirect(route('category.index'));
     }
 
     /**
