@@ -12,9 +12,4 @@ class expense extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-
-    public function categoryExpense()
-    {
-        return $this->belongsTo(categoryExpense::class, 'categoryExpenseId');
-    }
 }
