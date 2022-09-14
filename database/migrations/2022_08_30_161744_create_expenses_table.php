@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             $table->double('amount');
             $table->Integer('categoryExpenseId');
-            $table->string('type');
-            $table->string('components');
             $table->string('note');
-            $table->string('dateTime');
+            $table->dateTime('dateTime');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

@@ -75,14 +75,25 @@
                     <td>{{$expense->components}}</td>
                     <td>{{$expense->note}}</td>
                     <td>
-                        <a class="btn btn-primary" href='{{route("expense.edit", $expense->id)}}'>Edit</a> |
+                        <div class="input-group">
+                            <a class="btn btn-primary" href='{{route("expense.edit", $expense->id)}}'>Edit</a>
 
-                        <form method="post" action="{{route('expense.destroy', $expense->id)}}"
-                              onsubmit='return confirm("Sure ?")'>
-                            @csrf
-                            @method('DELETE')
-                            <input class="btn btn-danger" type="submit" value="Delete" >
-                        </form>
+
+                            <form method="post" action="{{route('expense.destroy', $expense->id)}}"
+                                  onsubmit='return confirm("Sure ?")'>
+                                @csrf
+                                @method('DELETE')
+                                <input class="btn btn-danger" type="submit" value="Delete" >
+                            </form>
+                        </div>
+{{--                        <a class="btn btn-primary" href='{{route("expense.edit", $expense->id)}}'>Edit</a> |--}}
+
+{{--                        <form method="post" action="{{route('expense.destroy', $expense->id)}}"--}}
+{{--                              onsubmit='return confirm("Sure ?")'>--}}
+{{--                            @csrf--}}
+{{--                            @method('DELETE')--}}
+{{--                            <input class="btn btn-danger" type="submit" value="Delete" >--}}
+{{--                        </form>--}}
                     </td>
                 </tr>
             @endforeach
