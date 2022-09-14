@@ -10,17 +10,36 @@
 {{--                       placeholder="Search IncomeCategory"> <span class="input-group-btn">--}}
 {{--            <button type="submit" class="btn btn-default">--}}
 {{--                <span class="glyphicon glyphicon-search">--}}
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Type of Expense" aria-label="Type of Expense">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Time" aria-label="Time">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
+
+
+{{--        <div class="row">--}}
+{{--            <div class="col">--}}
+{{--                <input type="text" class="form-control" placeholder="Type of Expense" aria-label="Type of Expense">--}}
+{{--            </div>--}}
+{{--            <div class="col">--}}
+{{--                <input type="text" class="form-control" placeholder="Time" aria-label="Time">--}}
+{{--            </div>--}}
+{{--            <div class="col-auto">--}}
+{{--                <button type="submit" class="btn btn-primary">Search</button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+        <div class="container">
+            <form action="{{url('/search')}}" method="POST" role="search">
+                {{csrf_field()}}
+                <div class="input-group">
+                     <input type="text" class="form-control" name="q" placeholder="Type Of Expense">
+                    <input type="text" class="form-control" name="q" placeholder="Time">
+                    <span class="input-group-btn">
+                       <button type="submit" class="btn btn-info">
+                           <a class="fas fa-search fa-sm" href="{{route('expense.index')}}"></a> Search
+                       </button>
+                     </span>
+
+                </div>
+            </form>
         </div>
+
+        <br><br>
 
         <div>
             <a class="btn btn-primary" href="{{route('expense.create')}}">Add Expense</a>
