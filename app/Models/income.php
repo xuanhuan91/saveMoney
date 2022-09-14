@@ -13,8 +13,8 @@ class income extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function categoryincome()
+    public function categoryIncome()
     {
-        return $this->belongsTo('App\Models\categoryIncome', 'categoryid');
+        return $this->belongsTo('App\Models\categoryIncome', 'categoryIncomeId');
     }
 }

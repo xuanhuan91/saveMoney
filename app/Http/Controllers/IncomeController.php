@@ -60,7 +60,7 @@ class IncomeController extends Controller
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
-        $cate->categoryid = $categoryid;
+        $cate->categoryIncomeId = $categoryid;
         $cate->save();
 
 
@@ -126,7 +126,7 @@ class IncomeController extends Controller
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
-        $cate->categoryid = $categoryid;
+        $cate->categoryIncomeId = $categoryid;
         $cate->save();
 
 
