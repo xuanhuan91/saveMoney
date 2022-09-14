@@ -38,21 +38,21 @@ class ExpenseController extends Controller
     {
         $this->validate($request,
             [
-                'amount' => 'required|min:5|max:500'
+                'amount' => 'required|min:1|max:50'
             ]);
         $dateTime = $request->dateTime;
         $categoryExpenseId = $request->categoryExpenseId;
         $amount = $request->amount;
-        $type = $request->type;
-        $components = $request->components;
+//        $type = $request->type;
+//        $components = $request->components;
         $note = $request->input('note');
 
 
         $expense = new Expense();
         $expense->amount = $amount;
         $expense->categoryExpenseId = $categoryExpenseId;
-        $expense->type = $type;
-        $expense->components = $components;
+//        $expense->type = $type;
+//        $expense->components = $components;
         $expense->note = $note;
         $expense->dateTime = $dateTime;
         $expense->save();
@@ -95,16 +95,16 @@ class ExpenseController extends Controller
     {
         $this->validate($request,
             [
-                'amount' => 'required|min:5|max:500'
+                'amount' => 'required|min:1|max:50'
             ]);
 
         $amount = $request->amount;
-        $type = $request->type;
+//        $type = $request->type;
         $note = $request->input('note');
 
         $expense = Models\Expense::find($id);
         $expense->amount = $amount;
-        $expense->type = $type;
+//        $expense->type = $type;
         $expense->note = $note;
         $expense->save();
 
@@ -129,4 +129,5 @@ class ExpenseController extends Controller
         }
         return redirect(route('expense.index'));
     }
+
 }
