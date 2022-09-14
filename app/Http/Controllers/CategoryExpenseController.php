@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\categoryExpense;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CategoryExpenseController extends Controller
 {
@@ -68,9 +69,10 @@ class CategoryExpenseController extends Controller
      * @param  \App\Models\categoryExpense  $categoryExpense
      * @return \Illuminate\Http\Response
      */
-    public function edit(categoryExpense $categoryExpense)
+    public function edit($id)
     {
-        //
+        $parentCategory = \App\Models\categoryExpense::find($id);
+        return view('categoryExpense.edit')->with('cate', $parentCategory);
     }
 
     /**
@@ -80,9 +82,20 @@ class CategoryExpenseController extends Controller
      * @param  \App\Models\categoryExpense  $categoryExpense
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categoryExpense $categoryExpense)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+            [
+                'name' => 'required|min:5|max:500'
+            ]);
+        $name = $request->name;
+
+        $parentCategory = \App\Models\categoryExpense::find($id);
+        $parentCategory->name = $name;
+        $parentCategory->save();
+
+        $request->session()->flash('success', 'Category Expense updated sucessfully.');
+        return redirect(route('categoryExpense.index'));
     }
 
     /**
@@ -91,8 +104,15 @@ class CategoryExpenseController extends Controller
      * @param  \App\Models\categoryExpense  $categoryExpense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(categoryExpense $categoryExpense)
+    public function destroy($id, Request $request)
     {
-        //
+        $parentCategory = \App\Models\categoryExpense::find($id);
+        if($parentCategory == null) {
+            $request->session()->flash('danger', 'Category Expense not found.');
+        } else {
+            $parentCategory->delete();
+            $request->session()->flash('success', 'Category Expense deleted sucessfully.');
+        }
+        return redirect(route('categoryExpense.index'));
     }
 }
