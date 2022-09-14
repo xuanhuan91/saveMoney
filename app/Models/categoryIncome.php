@@ -14,6 +14,6 @@ class categoryIncome extends Model
     protected $dates = ['deleted_at'];
 
     public function income(){
-                return $this->hasMany('App\Models\income', 'categoryid');
+                return $this->hasMany('App\Models\income', 'categoryIncomeId');
     }
 }
