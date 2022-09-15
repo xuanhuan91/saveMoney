@@ -2,7 +2,7 @@
 @section('content')
     <br>
     <div class="container">
-        <h4 class="fw-bold">Thông tin tài khoảnxxx</h4>
+        <h4 class="fw-bold">Thông tin tài khoản</h4>
         <div class="m-md-3">
             <table class="table bg-white p-5">
                 <tbody>
