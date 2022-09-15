@@ -107,6 +107,8 @@ return [
     | localized telephone numbers, street address information and more.
     |
     */
+    'Input' => Illuminate\Support\Facades\Input::class,
+    'Input' => Illuminate\Support\Facades\Request::class,
 
     'faker_locale' => 'en_US',
 
