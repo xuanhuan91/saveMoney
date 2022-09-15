@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form method="post" action="{{route('categoryExpense.store')}}">
+        <form method="post" action="{{route('CategoryExpense.store')}}">
             @csrf
             <div class="form-group">
                 <label>Name</label>
