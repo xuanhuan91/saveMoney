@@ -28,6 +28,7 @@ Route::resource('user', \App\Http\Controllers\userController::class);
 //Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 //Route::get('/categoryExpense', 'App\Http\Controllers\CategoryExpenseController@index');
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
+Route::resource("CategoryIncome",App\Http\Controllers\categoryIncomeController::class);
 Route::resource("expense", App\Http\Controllers\ExpenseController::class);
 
 Route::resource("income", \App\Http\Controllers\IncomeController::class);
