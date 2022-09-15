@@ -54,6 +54,9 @@ class IncomeController extends Controller
 //            'name'=> 'required |min:5|max:500'
 //        ]);
         $categoryid = $request->income_category_id;
+        if($categoryid==null){
+            $categoryid = $request->income_category;
+        }
         $dateTime = $request->dateTime;
         $amount = $request->amount;
         $note = $request->input('note');
