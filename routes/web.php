@@ -13,6 +13,8 @@ use App\Models\Expense;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/report/month', [App\Http\Controllers\ReportController::class, 'reportByMonth'])->name('report-month');
 Route::get('/report/week', [App\Http\Controllers\ReportController::class, 'reportByWeek'])->name('report-week');
 Route::get('/categoryExpense', 'CategoryExpenseController@index');
