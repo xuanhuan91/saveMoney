@@ -18,7 +18,9 @@
 {{--        @endforeach--}}
     <div style="margin: 30px">
         <h1 class="display-7">Quản lý loại khoản chi</h1>
-        <h4 class="text-right"><button class="btn btn-warning">Thêm</button></h4>
+        <a href="{{route('CategoryExpense.create')}}">
+            <h4 class="text-right"><button class="btn btn-warning">Thêm</button></h4>
+        </a>
 
         <table class="table">
             <thead class="thead-dark">
