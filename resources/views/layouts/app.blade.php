@@ -41,10 +41,10 @@
         <nav class="navbar navbar-light bg-white shadow-sm" style="height: 100vh">
             <ul class="navbar-nav justify-content-end flex-grow-1 ps-4" style="position: absolute;top:30px">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Quản lý loại khoản thu <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{route(('CategoryIncome.index'))}}">Quản lý loại khoản thu <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Quản lý loại khoản chi <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{route(('CategoryExpense.index'))}}">Quản lý loại khoản chi <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('income.index') }}">Quản lý khoản thu <span class="sr-only"></span></a>
