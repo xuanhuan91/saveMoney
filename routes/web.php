@@ -1,8 +1,8 @@
 <?php
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Expense;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/report/month', [App\Http\Controllers\ReportController::class, 'reportByMonth'])->name('report-month');
 Route::get('/report/week', [App\Http\Controllers\ReportController::class, 'reportByWeek'])->name('report-week');
 Route::get('/categoryExpense', 'CategoryExpenseController@index');
@@ -25,4 +27,5 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('user', \App\Http\Controllers\userController::class);
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
+Route::resource("expense", App\Http\Controllers\ExpenseController::class);
 
