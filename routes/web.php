@@ -32,3 +32,4 @@ Route::resource("expense", App\Http\Controllers\ExpenseController::class);
 
 Route::resource("income", \App\Http\Controllers\IncomeController::class);
 Route::post('search',[App\Http\Controllers\IncomeController::class,'search'])->name('search');
+
