@@ -62,7 +62,7 @@ class IncomeController extends Controller
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
-        $cate->categoryid = $categoryid;
+        $cate->categoryIncomeId = $categoryid;
         $cate->save();
 
         $request->session()->flash('success', 'Income created sucessfully');
