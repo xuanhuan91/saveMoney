@@ -13,7 +13,7 @@ class categoryIncome extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function incomes()
+    public function income()
     {
         return $this->hasMany(income::class, 'categoryIncomeId');
     }
