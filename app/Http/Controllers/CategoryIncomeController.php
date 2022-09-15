@@ -15,7 +15,7 @@ class CategoryIncomeController extends Controller
      */
     public function index()
     {
-        $parentCategoryIncome = \App\Models\categoryIncome::where('parent_id', 0)->get();
+        $parentCategoryIncome = \App\Models\categoryIncome::all();
         return view('categoryIncome.index', compact('parentCategoryIncome'));
     }
 

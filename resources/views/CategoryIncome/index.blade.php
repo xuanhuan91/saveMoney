@@ -31,12 +31,14 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($parentCategoryExpense as $parentCategory)
+            @foreach($parentCategoryIncome as $parentCategory)
                 <tr>
                     <td>{{$parentCategory->name}}</td>
-                    @if(count($parentCategory->subcategory))
-                        <td>@include('CategoryIncome.sub_category_list',['subcategories' => $parentCategory->subcategory])</td>
-                    @endif
+{{--                    @if(count($parentCategory->subcategory))--}}
+                        <td>
+{{--                            @include('CategoryIncome.sub_category_list',['subcategories' => $parentCategory->subcategory])--}}
+                        </td>
+{{--                    @endif--}}
                     <td>{{$parentCategory->created_at}}</td>
                     <td><a class="btn btn-warning">Edit</a></td>
                     <td>
