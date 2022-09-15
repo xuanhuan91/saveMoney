@@ -14,4 +14,9 @@ class expense extends Model
     protected $table ="expenses";
 
     protected $dates = ['deleted_at'];
+
+    public function categoryExpense()
+    {
+        return $this->belongsTo(categoryExpense::class, 'categoryExpenseId');
+    }
 }
