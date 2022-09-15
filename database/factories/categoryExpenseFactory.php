@@ -19,7 +19,7 @@ class categoryExpenseFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'subCategoryiD' => fake()->randomDigit(),
+            'parent_id' => fake()->randomDigit(),
             'updated_at' => now(),
             'created_at' => now(),
             'deleted_at' => null,
