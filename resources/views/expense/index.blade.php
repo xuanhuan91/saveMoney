@@ -171,9 +171,11 @@
 @endsection
 
 
+
 {{--@section('modalBody')--}}
 {{--    <div class="modal-body">--}}
 {{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Add Expense</h5>--}}
+
 
 {{--        <form method="post"  action="{{route('expense.store',$expense->id)}}">--}}
 {{--            @csrf--}}
@@ -225,6 +227,7 @@
 {{--                        <input id="dateTime" type="text" class="form-control @error('dateTime') is-invalid @enderror"--}}
 {{--                               name="dateTime" value="{{ old('dateTime',$expense->dateTime) }}" required autocomplete="dateTime">--}}
 
+
 {{--                        @error('dateTime')--}}
 {{--                        <span class="invalid-feedback" role="alert">--}}
 {{--                                            <strong>{{ $message }}</strong>--}}
@@ -248,3 +251,4 @@
 {{--        </form>--}}
 {{--    </div>--}}
 {{--@endsection--}}
+
