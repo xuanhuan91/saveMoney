@@ -55,9 +55,13 @@
                 <tr>
                     <td>{{$income->dateTime}}</td>
                     <td>
-                    @foreach($lscategoryincome as $categoryincome)
-                        @if($categoryincome->id == $income->categoryincome->subCategoryiD)
-                              {{ $categoryincome->name}}
+                    @foreach($lscategoryincome as $categoryIncome)
+                        @if($income->categoryIncome->subCategoryiD!=null)
+                                @if($categoryIncome->id == $income->categoryIncome->subCategoryiD)
+                                    {{ $categoryIncome->name}}
+                                @endif
+                            @else
+                                {{$income->categoryIncome->name}}
                             @endif
                      @endforeach
                     </td>
