@@ -3,6 +3,26 @@
 @section('content')
     <div class="container">
         <h2>Expense manager</h2>
+{{--        <form action="/search" method="POST" role="search">--}}
+{{--            {{ csrf_field() }}--}}
+{{--            <div class="input-group">--}}
+{{--                <input type="text" class="form-control" name="search1"--}}
+{{--                       placeholder="Search IncomeCategory"> <span class="input-group-btn">--}}
+{{--            <button type="submit" class="btn btn-default">--}}
+{{--                <span class="glyphicon glyphicon-search">--}}
+
+
+{{--        <div class="row">--}}
+{{--            <div class="col">--}}
+{{--                <input type="text" class="form-control" placeholder="Type of Expense" aria-label="Type of Expense">--}}
+{{--            </div>--}}
+{{--            <div class="col">--}}
+{{--                <input type="text" class="form-control" placeholder="Time" aria-label="Time">--}}
+{{--            </div>--}}
+{{--            <div class="col-auto">--}}
+{{--                <button type="submit" class="btn btn-primary">Search</button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="container">
             <form action="{{url('/search')}}" method="POST" role="search">
                 {{csrf_field()}}
@@ -151,80 +171,80 @@
 @endsection
 
 
-@section('modalBody')
-    <div class="modal-body">
-        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Add Expense</h5>
+{{--@section('modalBody')--}}
+{{--    <div class="modal-body">--}}
+{{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Add Expense</h5>--}}
 
-        <form method="post"  action="{{route('expense.store',$expense->id)}}">
-            @csrf
-            @method('put')
-            <div>
-                <label for="name" class="col-md-12 mb-0 mt-2">{{ __('Amount') }}</label>
-                <div class="col-md-12">
-                    <input id="amount" type="text" class="form-control @error('amount') is-invalid @enderror" name="amount"
-                           value="{{ old('amount',$expense->amount) }}" required autocomplete="amount" autofocus>
+{{--        <form method="post"  action="{{route('expense.store',$expense->id)}}">--}}
+{{--            @csrf--}}
+{{--            @method('put')--}}
+{{--            <div>--}}
+{{--                <label for="name" class="col-md-12 mb-0 mt-2">{{ __('Amount') }}</label>--}}
+{{--                <div class="col-md-12">--}}
+{{--                    <input id="amount" type="text" class="form-control @error('amount') is-invalid @enderror" name="amount"--}}
+{{--                           value="{{ old('amount',$expense->amount) }}" required autocomplete="amount" autofocus>--}}
 
-                    @error('amount')
-                    <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="categoryExpenseId" class="col-md-12 mb-0 mt-2">{{ __('Category Expense Id') }}</label>
+{{--                    @error('amount')--}}
+{{--                    <span class="invalid-feedback" role="alert">--}}
+{{--                                                <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                    @enderror--}}
+{{--                </div>--}}
+{{--                <div>--}}
+{{--                    <label for="categoryExpenseId" class="col-md-12 mb-0 mt-2">{{ __('Category Expense Id') }}</label>--}}
 
-                    <div class="col-md-12">
-                        <input id="categoryExpenseId" type="text" class="form-control @error('categoryExpenseId') is-invalid @enderror"
-                               name="categoryExpenseId" value="{{ old('categoryExpenseId',$expense->categoryExpenseId) }}" required autocomplete="categoryExpenseId">
+{{--                    <div class="col-md-12">--}}
+{{--                        <input id="categoryExpenseId" type="text" class="form-control @error('categoryExpenseId') is-invalid @enderror"--}}
+{{--                               name="categoryExpenseId" value="{{ old('categoryExpenseId',$expense->categoryExpenseId) }}" required autocomplete="categoryExpenseId">--}}
 
-                        @error('categoryExpenseId')
-                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div>
-                    <label for="note" class="col-md-12 mb-0 mt-2">{{ __('Note') }}</label>
+{{--                        @error('categoryExpenseId')--}}
+{{--                        <span class="invalid-feedback" role="alert">--}}
+{{--                                            <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div>--}}
+{{--                    <label for="note" class="col-md-12 mb-0 mt-2">{{ __('Note') }}</label>--}}
 
-                    <div class="col-md-12">
-                        <input id="note" type="note" class="form-control @error('note') is-invalid @enderror"
-                               name="note" value="{{ old('note',$expense->note) }}" required autocomplete="note">
+{{--                    <div class="col-md-12">--}}
+{{--                        <input id="note" type="note" class="form-control @error('note') is-invalid @enderror"--}}
+{{--                               name="note" value="{{ old('note',$expense->note) }}" required autocomplete="note">--}}
 
-                        @error('note')
-                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div>
-                    <label for="dateTime" class="col-md-12 mb-0 mt-2">{{ __('DateTime') }}</label>
+{{--                        @error('note')--}}
+{{--                        <span class="invalid-feedback" role="alert">--}}
+{{--                                            <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div>--}}
+{{--                    <label for="dateTime" class="col-md-12 mb-0 mt-2">{{ __('DateTime') }}</label>--}}
 
-                    <div class="col-md-12">
-                        <input id="dateTime" type="text" class="form-control @error('dateTime') is-invalid @enderror"
-                               name="dateTime" value="{{ old('dateTime',$expense->dateTime) }}" required autocomplete="dateTime">
+{{--                    <div class="col-md-12">--}}
+{{--                        <input id="dateTime" type="text" class="form-control @error('dateTime') is-invalid @enderror"--}}
+{{--                               name="dateTime" value="{{ old('dateTime',$expense->dateTime) }}" required autocomplete="dateTime">--}}
 
-                        @error('dateTime')
-                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                            </span>
-                        @enderror
-                    </div>
-                <div class="col-md-12">
-                    <div class="row justify-content-around">
-                        <div class="col-4">
-                            <button type="button" class="col btn btn-outline-primary mb-0 mt-2" data-dismiss="modal">
-                                Cancel
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="submit" class="col btn btn-primary mb-0 mt-2">Save</button>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </form>
-    </div>
-@endsection
+{{--                        @error('dateTime')--}}
+{{--                        <span class="invalid-feedback" role="alert">--}}
+{{--                                            <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                <div class="col-md-12">--}}
+{{--                    <div class="row justify-content-around">--}}
+{{--                        <div class="col-4">--}}
+{{--                            <button type="button" class="col btn btn-outline-primary mb-0 mt-2" data-dismiss="modal">--}}
+{{--                                Cancel--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-4">--}}
+{{--                            <button type="submit" class="col btn btn-primary mb-0 mt-2">Save</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </form>--}}
+{{--    </div>--}}
+{{--@endsection--}}
