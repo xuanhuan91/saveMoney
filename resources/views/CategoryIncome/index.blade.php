@@ -26,7 +26,7 @@
                 <tr>
                     <td>{{$parentIncome->name}}</td>
                     <td>{{$parentIncome->note}}</td>
-                    @if(count($$parentIncome->subcategory))
+                    @if(count($parentIncome->subcategory))
                         <td>
                             @include('CategoryIncome.sub_category_list',['subcategories' => $parentIncome->subcategory])
                         </td>
