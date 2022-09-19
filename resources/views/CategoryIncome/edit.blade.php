@@ -1,25 +1,32 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div class="container">
-        @if(count($errors) > 0)
-            <div class="alert alert-danger">
-                @foreach($errors->all() as $err)
-                    <p>{{$err}}</p>
-                @endforeach
-            </div>
-        @endif
-
-        <form method="post" action="{{route('CategoryIncome.update', $parentCategory->id)}}">
+        <h4>Edit new CategoryIncome </h4>
+        <div class="container">
+            @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $err)
+                        <p>{{$err}}</p>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+        <form action="{{ route('CategoryIncome.update',$ctincome) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label>Name</label>
-                <input  class="form-control" type="text" name="name" value="{{old('name', $parentCategory->name) }}"/>
+                <label for="amount">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name">
             </div>
-            <div class="form-group py-1">
-                <input type="submit" class="btn btn-primary" value="Save"/>
+            <div class="form-group">
+                <label for="note">Note</label>
+                <input type="text" class="form-control" id="note" name="note" value="{{old('note',$ctincome->note) }}" placeholder="Enter note">
             </div>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
+
 @endsection
+

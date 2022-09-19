@@ -1,24 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    {{--        <ul>--}}
-    {{--            <li>--}}
-    {{--                <a href="{{route('CategoryExpense.create')}}"><button class="btn btn-warning">New category</button></a>--}}
-    {{--            </li>--}}
-    {{--        </ul>--}}
-    {{--        @foreach($parentCategoryExpense as $parentCategory)--}}
-    {{--            <ul class="list-group">--}}
-    {{--                <li class="list-group-item"><a>{{$parentCategory->name}}</a>--}}
-    {{--                <li class="list-group-item">--}}
-    {{--                    @if(count($parentCategory->subcategory))--}}
-    {{--                        @include('CategoryExpense.sub_category_list',['subcategories' => $parentCategory->subcategory])--}}
-    {{--                    @endif--}}
-    {{--                </li>--}}
-    {{--                </li>--}}
-    {{--            </ul>--}}
-    {{--        @endforeach--}}
     <div style="margin: 30px">
         <h1 class="display-7">Quản lý loại khoản thu</h1>
-        <h4 class="text-right"><button class="btn btn-warning">Thêm</button></h4>
+        <div>
+            <a class="btn btn-primary" href="{{route('CategoryIncome.create')}}">Add CategoryIncome</a>
+        </div>
 
         <table class="table">
             <thead class="thead-dark">
@@ -28,30 +14,41 @@
                 <th scope="col">Thời gian tạo</th>
                 <th scope="col">Sửa</th>
                 <th scope="col">Xóa</th>
+                <th scope="col">Note</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($parentCategoryIncome as $parentCategory)
+            @foreach($lsCategoryIncome as $parentIncome)
                 <tr>
-                    <td>{{$parentCategory->name}}</td>
-{{--                    @if(count($parentCategory->subcategory))--}}
+                    <td>{{$parentIncome->name}}</td>
+                    <td>{{$parentIncome->note}}</td>
+                    @if(count($$parentIncome->subcategory))
                         <td>
-{{--                            @include('CategoryIncome.sub_category_list',['subcategories' => $parentCategory->subcategory])--}}
+                            @include('CategoryIncome.sub_category_list',['subcategories' => $parentIncome->subcategory])
                         </td>
-{{--                    @endif--}}
-                    <td>{{$parentCategory->created_at}}</td>
-                    <td><a class="btn btn-warning">Edit</a></td>
+                    @endif
+                    <td>{{$parentIncome->created_at}}</td>
                     <td>
-                        <form method="post" action="{{route('CategoryIncome.destroy', $parentCategory->id)}}"
-                              onsubmit='return confirm("Are you sure ?")'>
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="Delete" class="btn btn-danger">
-                        </form>
+                        <div class="input-group">
+                            <a class="btn btn-warning" href="{{route("CategoryIncome.edit", $parentIncome->id)}}">Edit</a>
+
+                            <form method="post" action="{{route('CategoryIncome.destroy', $parentIncome->id)}}"
+                                  onsubmit='return confirm("Are you sure ?")'>
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
+    <script type="text/javascript">
+        function confirmDelete() {
+            var value =  confirm("Sure ?");
+            return value;
+        }
+    </script>
 @endsection
