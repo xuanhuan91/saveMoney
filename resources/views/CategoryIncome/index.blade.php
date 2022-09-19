@@ -3,7 +3,11 @@
     <div style="margin: 30px">
         <h1 class="display-7">Quản lý loại khoản thu</h1>
         <div>
-            <a class="btn btn-primary" href="{{route('CategoryIncome.create')}}">Add CategoryIncome</a>
+            <a href="{{route('CategoryIncome.create')}}">
+                <h4 class="text-light">
+                    <button class="btn btn-primary">Add CategoryIncome</button>
+                </h4>
+            </a>
         </div>
 
         <table class="table">
