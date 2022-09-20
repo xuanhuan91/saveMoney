@@ -18,10 +18,14 @@
             @method('PUT')
             <div class="form-group">
                 <label for="amount">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name">
+                <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name"/>
             </div>
+{{--            <div class="form-group">--}}
+{{--                <label>Thành Phần loại Khoản Thu</label>--}}
+{{--                <input  class="form-control" type="text" name="name" value="{{old('name',$ctincome->name)}}" placeholder="Enter name"/>--}}
+{{--            </div>--}}
             <div class="form-group">
-                <label for="note">Note</label>
+                <label for="note">Khoản Thu Con</label>
                 <textarea type="text" class="form-control" name="note">{{old('note',$ctincome->note) }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
