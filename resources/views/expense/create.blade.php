@@ -16,10 +16,36 @@
                 <label>Amount</label>
                 <input  class="form-control" type="text" name="amount" value="{{old('amount')}}"/>
             </div>
-            <div class="form-group">
-                <label>Category Expense Id</label>
-                <input  class="form-control" type="text" name="categoryExpenseId" value="{{old('categoryExpenseId')}}"/>
+{{--            <div class="form-group">--}}
+{{--                <label>Category Expense Id</label>--}}
+{{--                <input  class="form-control" type="text" name="categoryExpenseId" value="{{old('categoryExpenseId')}}"/>--}}
+{{--            </div>--}}
+
+            <div class="form-group ">
+                <label for="expense_category">Type of Expense</label>
+                <select name="expense_category" id="expense_category" class="form-control select2"
+                        onchange="chooseSubCategory(this)">
+                    @foreach($lscategoryexpense as $lscategory)
+                        <option value="{{$lscategory->id}}">{{$lscategory->name}}</option>
+                    @endforeach
+
+                </select>
             </div>
+
+            <div class="form-group ">
+                <label for="expense_category_id">Components Of Expense Type</label>
+                <select name="expense_category_id" id="subexpense_category" class="form-control select2">
+                    @foreach($subcategory as $subidcategory)
+                        <option value="{{$subidcategory->id}}">{{$subidcategory->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <script type="text/javascript">
+                function chooseSubCategory(answer) {
+                    return (answer.value)
+                }
+            </script>
 {{--            <div class="form-group">--}}
 {{--                <label>Type Of Expense</label>--}}
 {{--                <textarea  class="form-control" name="type">{{old('type')}}</textarea>--}}
@@ -39,9 +65,9 @@
             <div class="form-group py-1">
                 <input type="submit" class="btn btn-primary" value="Save"/>
             </div>
-            <div class="form-group py-lg-2">
-                <input href="expense.index" type="submit" class="btn btn-danger" value="Cancel"/>
-            </div>
+{{--            <div class="form-group py-lg-2" >--}}
+{{--                <input href="{{route('expense.index')}}"  type="submit" class="btn btn-danger" value="Cancel"/>--}}
+{{--            </div>--}}
         </form>
     </div>
 @endsection
