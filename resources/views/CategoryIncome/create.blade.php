@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label>Note</label>
-                <input  class="form-control" type="note" name="note" value=""/>
+                <textarea class="form-control" name="note">{{old('note')}}</textarea>
             </div>
             <div class="form-group py-1">
                 <input type="submit" class="btn btn-primary" value="Save"/>
