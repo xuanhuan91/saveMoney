@@ -60,7 +60,6 @@
                 <tr>
                     <td>{{$expense->dateTime}}</td>
                     <td>{{$expense->amount}}</td>
-                    <td>{{$expense->categoryexpense->name}}</td>
                     <td>
                         @foreach($lscategoryexpense as $categoryExpense)
                             @if($expense->categoryExpense->subCategoryiD!=null)
@@ -72,6 +71,7 @@
                             @endif
                         @endforeach
                     </td>
+                    <td>{{$expense->categoryexpense->name}}</td>
                     <td>{{$expense->note}}</td>
                     <td>
                             <form action="">
