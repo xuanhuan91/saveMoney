@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label for="note">Note</label>
-                <input type="text" class="form-control" id="note" name="note" value="{{old('note',$ctincome->note) }}" placeholder="Enter note">
+                <textarea type="text" class="form-control" name="note">{{old('note',$ctincome->note) }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

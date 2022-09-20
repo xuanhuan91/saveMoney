@@ -40,14 +40,14 @@ class CategoryIncomeController extends Controller
     {
         $this->validate($request,
             [
-                'name' => 'required|min:5|max:500'
+                'name' => 'required|min:0|max:500'
             ]);
-        $name = $request->input('name');
+        $name = $request->name;
         $note = $request->input('note');
 
         $ctincome = new CategoryIncome();
-        $ctincome->name =$name;
-        $ctincome->note=$note;
+        $ctincome->name = $name;
+        $ctincome->note= $note;
         $ctincome->save();
 
         $request->session()->flash('success', 'New Income category created successfully');
@@ -89,9 +89,9 @@ class CategoryIncomeController extends Controller
     {
         $this->validate($request,
             [
-                'name' => 'required|min:5|max:500'
+                'name' => 'required|min:0|max:500'
             ]);
-        $name = $request->input('name');
+        $name = $request-> name;
         $note = $request->input('note');
 
         $ctincome = Models\categoryIncome::find($id);
