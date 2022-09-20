@@ -17,12 +17,12 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="amount">Name</label>
+                <label for="amount">Loại Khoản Thu</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name"/>
             </div>
             <div class="form-group">
                 <label for="note">Thành Phần loại Khoản Thu</label>
-                <textarea type="text" class="form-control" name="Subname">{{old('Subname',$ctincome->subCategoryiD) }}</textarea>
+                <input type="text" class="form-control" name="subname">{{old('subname',$ctincome->subCategoryiD) }}</input>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

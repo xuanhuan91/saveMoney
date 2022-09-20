@@ -13,12 +13,12 @@
         <form method="post" action="{{route('CategoryIncome.store')}}">
             @csrf
             <div class="form-group">
-                <label>Tên Loại Khoản Thu</label>
+                <label>Loại Khoản Thu</label>
                 <input  class="form-control" type="text" name="name" value=""/>
             </div>
             <div class="form-group">
                 <label>Thành Phần loại Khoản Thu</label>
-                <input  class="form-control" type="text" name="Subname" value=""/>
+                <input  class="form-control" type="text" name="subname" value=""/>
             </div>
 {{--            <div class="form-group">--}}
 {{--                <label>Khoản Thu Con</label>--}}
