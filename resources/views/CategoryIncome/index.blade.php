@@ -17,7 +17,6 @@
                 <th scope="col">Khoản thu con</th>
                 <th scope="col">Thời gian tạo</th>
                 <th scope="col">Sửa | Xóa</th>
-                <th scope="col">Note</th>
             </tr>
             </thead>
             <tbody>
@@ -25,11 +24,6 @@
                 <tr>
                     <td>{{$parentIncome->name}}</td>
                     <td>{{$parentIncome->note}}</td>
-{{--                    @if(count($parentIncome->subcategory))--}}
-{{--                        <td>--}}
-{{--                            @include('CategoryIncome.sub_category_list',['subcategories' => $parentIncome->subcategory])--}}
-{{--                        </td>--}}
-{{--                    @endif--}}
                     <td>{{$parentIncome->created_at}}</td>
                     <td>
                         <div class="input-group">

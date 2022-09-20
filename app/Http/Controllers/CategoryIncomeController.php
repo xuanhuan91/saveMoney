@@ -100,7 +100,7 @@ class CategoryIncomeController extends Controller
         $ctincome->save();
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');
-        return redirect(route('categoryIncome.index'));
+        return redirect(route('CategoryIncome.index'));
     }
 
     /**
@@ -118,6 +118,6 @@ class CategoryIncomeController extends Controller
             $ctincome->delete();
             $request->session()->flash('success', 'Category Income deleted successfully.');
         }
-        return redirect(route('categoryExpense.index'));
+        return redirect(route('CategoryIncome.index'));
     }
 }

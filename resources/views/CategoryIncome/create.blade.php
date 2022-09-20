@@ -16,12 +16,12 @@
                 <label>Tên Loại Khoản Thu</label>
                 <input  class="form-control" type="text" name="name" value=""/>
             </div>
+{{--            <div class="form-group">--}}
+{{--                <label>Thành Phần loại Khoản Thu</label>--}}
+{{--                <input  class="form-control" type="text" name="name" value=""/>--}}
+{{--            </div>--}}
             <div class="form-group">
-                <label>Thành Phần loại Khoản Thu</label>
-                <input  class="form-control" type="text" name="name" value=""/>
-            </div>
-            <div class="form-group">
-                <label>Note</label>
+                <label>Khoản Thu Con</label>
                 <textarea class="form-control" name="note">{{old('note')}}</textarea>
             </div>
             <div class="form-group py-1">
