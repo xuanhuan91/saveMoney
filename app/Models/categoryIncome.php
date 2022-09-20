@@ -17,4 +17,5 @@ class categoryIncome extends Model
     {
         return $this->hasMany(income::class, 'categoryIncomeId');
     }
+//    public function
 }

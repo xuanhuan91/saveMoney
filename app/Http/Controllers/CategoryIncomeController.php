@@ -42,12 +42,14 @@ class CategoryIncomeController extends Controller
             [
                 'name' => 'required|min:0|max:500'
             ]);
-        $name = $request->name;
-        $note = $request->input('note');
+        $subCategoryiD = $request->input('Subname');
+        $name = $request-> input('name');
+//        $note = $request->input('note');
 
         $ctincome = new CategoryIncome();
         $ctincome->name = $name;
-        $ctincome->note= $note;
+        $ctincome->subCategoryiD= $subCategoryiD;
+//        $ctincome->note= $note;
         $ctincome->save();
 
         $request->session()->flash('success', 'New Income category created successfully');
@@ -91,12 +93,12 @@ class CategoryIncomeController extends Controller
             [
                 'name' => 'required|min:0|max:500'
             ]);
-        $name = $request-> name;
-        $note = $request->input('note');
+        $subCategoryiD= $request->input('Subname');
+        $name = $request-> input('name');
 
-        $ctincome = Models\categoryIncome::find($id);
+        $ctincome = new CategoryIncome();
         $ctincome->name = $name;
-        $ctincome->note=$note;
+        $ctincome->subCategoryiD =$subCategoryiD;
         $ctincome->save();
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');

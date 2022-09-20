@@ -13,20 +13,16 @@
                 </div>
             @endif
         </div>
-        <form action="{{ route('CategoryIncome.update',$ctincome) }}" method="POST">
+        <form action="{{ route('CategoryIncome.update',$ctincome->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
                 <label for="amount">Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name"/>
             </div>
-{{--            <div class="form-group">--}}
-{{--                <label>Thành Phần loại Khoản Thu</label>--}}
-{{--                <input  class="form-control" type="text" name="name" value="{{old('name',$ctincome->name)}}" placeholder="Enter name"/>--}}
-{{--            </div>--}}
             <div class="form-group">
-                <label for="note">Khoản Thu Con</label>
-                <textarea type="text" class="form-control" name="note">{{old('note',$ctincome->note) }}</textarea>
+                <label for="note">Thành Phần loại Khoản Thu</label>
+                <textarea type="text" class="form-control" name="Subname">{{old('Subname',$ctincome->subCategoryiD) }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
