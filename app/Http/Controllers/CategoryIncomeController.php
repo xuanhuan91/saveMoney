@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\categoryIncome;
 use Illuminate\Http\Request;
-use App\Models;
 use Carbon\Carbon;
 
 class CategoryIncomeController extends Controller
@@ -16,8 +15,8 @@ class CategoryIncomeController extends Controller
      */
     public function index()
     {
-        $lsCategoryIncome = Models\CategoryIncome::all();
-        return view('CategoryIncome.index')->with('lsCategoryIncome',$lsCategoryIncome);
+        $parentCategoryIncome = \App\Models\categoryIncome::all();
+        return view('categoryIncome.index', compact('parentCategoryIncome'));
     }
 
     /**
@@ -27,7 +26,7 @@ class CategoryIncomeController extends Controller
      */
     public function create()
     {
-        return view('CategoryIncome.create');
+        //
     }
 
     /**
@@ -40,21 +39,17 @@ class CategoryIncomeController extends Controller
     {
         $this->validate($request,
             [
-                'name' => 'required|min:0|max:500'
+                'name' => 'required|min:5|max:500'
             ]);
-        $subCategoryiD = $request->input('Subname');
-        $name = $request-> input('name');
-//        $note = $request->input('note');
+        $name = $request->input('name');
 
-        $ctincome = new CategoryIncome();
-        $ctincome->name = $name;
-        $ctincome->subCategoryiD= $subCategoryiD;
-//        $ctincome->note= $note;
-        $ctincome->save();
+        $cate = new Models\CategoryIncome();
+        $cate->name =$name;
+        $cate->save();
 
         $request->session()->flash('success', 'New Income category created successfully');
 
-        return redirect(route('CategoryIncome.index'));
+        return redirect(route('category.index'));
     }
 
     /**
@@ -76,8 +71,8 @@ class CategoryIncomeController extends Controller
      */
     public function edit($id)
     {
-        $ctincome = Models\categoryIncome::find($id);
-        return view('CategoryIncome.edit')->with('ctincome', $ctincome);
+        $parentCategory = \App\Models\categoryIncome::find($id);
+        return view('categoryIncome.edit')->with('cate', $parentCategory);
     }
 
     /**
@@ -91,18 +86,16 @@ class CategoryIncomeController extends Controller
     {
         $this->validate($request,
             [
-                'name' => 'required|min:0|max:500'
+                'name' => 'required|min:5|max:500'
             ]);
-        $subCategoryiD= $request->input('Subname');
-        $name = $request-> input('name');
+        $name = $request->name;
 
-        $ctincome = new CategoryIncome();
-        $ctincome->name = $name;
-        $ctincome->subCategoryiD =$subCategoryiD;
-        $ctincome->save();
+        $parentCategory = \App\Models\categoryIncome::find($id);
+        $parentCategory->name = $name;
+        $parentCategory->save();
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');
-        return redirect(route('CategoryIncome.index'));
+        return redirect(route('categoryIncome.index'));
     }
 
     /**
@@ -113,13 +106,13 @@ class CategoryIncomeController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $ctincome = Models\categoryIncome::find($id);
-        if($ctincome == null) {
+        $parentCategory = \App\Models\categoryIncome::find($id);
+        if($parentCategory == null) {
             $request->session()->flash('danger', 'Category Income not found.');
         } else {
-            $ctincome->delete();
+            $parentCategory->delete();
             $request->session()->flash('success', 'Category Income deleted successfully.');
         }
-        return redirect(route('CategoryIncome.index'));
+        return redirect(route('categoryExpense.index'));
     }
 }
