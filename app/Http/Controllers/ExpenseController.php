@@ -24,9 +24,8 @@ class ExpenseController extends Controller
         $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
         $lsexpense = Expense::all();
         return view('expense.index')->with(['lsexpense' => $lsexpense, 'lscategoryexpense' => $lscategoryexpense]);
-//        $lsExpense = Models\Expense::all();
-//        return view('expense.index')->with('lsExpense', $lsExpense);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +37,7 @@ class ExpenseController extends Controller
         $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
         $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
         return view('expense.create', compact('lscategoryexpense', 'subcategory'));
-//        return view('expense.create');
+//
     }
 
     /**
@@ -66,29 +65,7 @@ class ExpenseController extends Controller
 
         $request->session()->flash('success', 'Expense created sucessfully');
         return redirect(route('expense.index'));
-//        $this->validate($request,
-//            [
-//                'amount' => 'required|min:1|max:50'
-//            ]);
-//        $dateTime = $request->dateTime;
-//        $categoryExpenseId = $request->categoryExpenseId;
-//        $amount = $request->amount;
-////        $type = $request->type;
-////        $components = $request->components;
-//        $note = $request->input('note');
-//
-//
-//        $expense = new Expense();
-//        $expense->amount = $amount;
-//        $expense->categoryExpenseId = $categoryExpenseId;
-////        $expense->type = $type;
-////        $expense->components = $components;
-//        $expense->note = $note;
-//        $expense->dateTime = $dateTime;
-//        $expense->save();
-//
-//        $request->session()->flash('success', 'Expense created sucessfully.');
-//        return redirect(route('expense.index'));
+
     }
 
     /**
@@ -147,23 +124,6 @@ class ExpenseController extends Controller
 
         $request->session()->flash('success', 'Expense update sucessfully');
         return redirect(route('expense.index'));
-//        $this->validate($request,
-//            [
-//                'amount' => 'required|min:1|max:50'
-//            ]);
-//
-//        $amount = $request->amount;
-////        $type = $request->type;
-//        $note = $request->input('note');
-//
-//        $expense = Models\Expense::find($id);
-//        $expense->amount = $amount;
-////        $expense->type = $type;
-//        $expense->note = $note;
-//        $expense->save();
-//
-//        $request->session()->flash('success', 'Expense update sucessfully.');
-//        return redirect(route('expense.index'));
     }
 
     /**
@@ -179,17 +139,8 @@ class ExpenseController extends Controller
         $request->session()->flash('success', 'Delete sucessfully');
         return redirect(route('expense.index'));
     }
-//    public function destroy($id, Request $request)
-//    {
-//        $expense = Models\Expense::find($id);
-//        if($expense == null) {
-//            $request->session()->flash('danger', 'Expense not found.');
-//        } else {
-//            $expense->delete();
-//            $request->session()->flash('success', 'Expense deleted sucessfully.');
-//        }
-//        return redirect(route('expense.index'));
-//    }
+
+
     public function search(Request $request)
     {
         $title = $request->input('title');
