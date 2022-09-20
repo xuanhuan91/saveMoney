@@ -4,6 +4,9 @@
     <div class="container">
         <h2>Expense manager</h2>
 
+
+
+
         <div>
             <form method="post" action="{{route('search')}}">
                 @csrf
@@ -174,6 +177,7 @@
 {{--    <div class="modal-body">--}}
 {{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Add Expense</h5>--}}
 
+
 {{--        <form method="post"  action="{{route('expense.store',$expense->id)}}">--}}
 {{--            @csrf--}}
 {{--            @method('put')--}}
@@ -223,6 +227,7 @@
 {{--                    <div class="col-md-12">--}}
 {{--                        <input id="dateTime" type="text" class="form-control @error('dateTime') is-invalid @enderror"--}}
 {{--                               name="dateTime" value="{{ old('dateTime',$expense->dateTime) }}" required autocomplete="dateTime">--}}
+
 
 {{--                        @error('dateTime')--}}
 {{--                        <span class="invalid-feedback" role="alert">--}}
