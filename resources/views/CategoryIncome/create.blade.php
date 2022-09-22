@@ -13,19 +13,16 @@
         <form method="post" action="{{route('CategoryIncome.store')}}">
             @csrf
             <div class="form-group">
-                <label>Loại Khoản Thu</label>
-                <input  class="form-control" type="text" name="name" value=""/>
+                <label>Tên Loại Khoản Thu</label>
+                <input  class="form-control" type="text" name="name" value="{{old('name')}}"/>
             </div>
             <div class="form-group">
                 <label>Thành Phần loại Khoản Thu</label>
-                <input  class="form-control" type="text" name="subname" value=""/>
+                <input  class="form-control" type="text" name="subCategoryiD" value="{{old('subCategoryiD')}}"/>
             </div>
-{{--            <div class="form-group">--}}
-{{--                <label>Khoản Thu Con</label>--}}
-{{--                <textarea class="form-control" name="note">{{old('note')}}</textarea>--}}
-{{--            </div>--}}
             <div class="form-group py-1">
                 <input type="submit" class="btn btn-primary" value="Save"/>
+                <input href="CategoryIncome.index" type="submit" class="btn btn-danger" value="Cancel"/>
             </div>
         </form>
     </div>

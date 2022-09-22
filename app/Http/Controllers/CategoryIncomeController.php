@@ -42,7 +42,7 @@ class CategoryIncomeController extends Controller
             [
                 'name' => 'required|min:0|max:500'
             ]);
-        $subCategoryiD = $request->input('subname');
+        $subCategoryiD = $request->input('subCategoryiD');
         $name = $request->input('name');
 
         $ctincome = new Models\CategoryIncome();
@@ -74,7 +74,7 @@ class CategoryIncomeController extends Controller
      */
     public function edit($id)
     {
-        $ctincome = Models\categoryIncome::find($id);
+        $ctincome = Models\CategoryIncome::find($id);
         return view('CategoryIncome.edit')->with('ctincome', $ctincome);
     }
 
@@ -91,10 +91,10 @@ class CategoryIncomeController extends Controller
             [
                 'name' => 'required|min:0|max:500'
             ]);
-        $subCategoryiD = $request->input('subname');
+        $subCategoryiD = $request->input('subCategoryiD');
         $name = $request->input('name');
 
-        $ctincome = new Models\CategoryIncome();
+        $ctincome = Models\CategoryIncome::find($id);
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
         $ctincome->save();

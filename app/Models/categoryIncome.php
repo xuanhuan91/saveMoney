@@ -12,6 +12,8 @@ class categoryIncome extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    protected $fillable = ['name', 'parent_id'];
+
 
     public function income()
     {
