@@ -25,6 +25,8 @@ class dashboardController extends Controller
                 $currentLimit = $limit->limit;
             }
         }
+        $limits = expenseLimit::where('userId','=',Auth::user()->id)->orderBy('startDate','desc')->Paginate(5);
+
         $incomes = income::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')->Paginate(5);
         $expenses = expense::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')->Paginate(5);
 

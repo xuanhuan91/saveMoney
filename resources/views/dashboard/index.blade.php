@@ -313,6 +313,7 @@
             @endforeach
             </tbody>
         </table>
+        {{$limits->links()}}
     </div>
 @endsection
 @section('modalDelete')
