@@ -30,6 +30,11 @@ Route::resource('user', \App\Http\Controllers\userController::class);
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 Route::resource("CategoryIncome",App\Http\Controllers\categoryIncomeController::class);
 Route::resource("expense", App\Http\Controllers\ExpenseController::class);
+Route::resource("dashboard", App\Http\Controllers\dashboardController::class);
+Route::resource("expenseLimit", App\Http\Controllers\ExpenseLimitController::class);
+Route::get('checkStartDate',[App\Http\Controllers\ExpenseLimitController::class,'checkStartDate'])->name('checkStartDate');
+
+
 
 Route::resource("income", \App\Http\Controllers\IncomeController::class);
 Route::post('search',[App\Http\Controllers\IncomeController::class,'search'])->name('search');
