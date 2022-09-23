@@ -19,6 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @yield('scriptSrc')
 </head>
 <body>
 <div class="row" style="height: 100%">
@@ -54,6 +55,9 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{route('report-month')}}">Quản lý báo cáo <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{route('dashboard.index')}}">Bảng tin<span class="sr-only"></span></a>
                 </li>
                 <li>
                     <hr class="table-group-divider" style="width: 150%">
@@ -115,7 +119,7 @@
         <main>
             @yield('content')
         </main>
-        <!-- Modal -->
+        <!-- Modal create-->
         <div class="modal fade" style="padding-right: 0!important;" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="margin-right: 0;margin-top:0;margin-bottom: 0">
 
@@ -137,6 +141,69 @@
                 </div>
             </div>
         </div>
+        <!-- Modal edit-->
+        <div class="modal fade" style="padding-right: 0!important; z-index: 10000" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="margin-right: 0;margin-top:0;margin-bottom: 0">
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="modal-content" style="height: 100vh">
+                            <div class="modal-header border border-white">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @yield('modalEdit')
+                            <div class="modal-footer border border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal delete-->
+        <div class="modal fade" style="padding-right: 0!important; z-index: 10000" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="margin-right: 0;margin-top:0;margin-bottom: 0">
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="modal-content" style="height: 100vh">
+                            <div class="modal-header border border-white">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @yield('modalDelete')
+                            <div class="modal-footer border border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal index-->
+        <div class="modal fade" style="padding-right: 0!important;" id="modalIndex" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="margin-right: 0;margin-top:0;margin-bottom: 0">
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="modal-content" style="height: 100vh">
+                            <div class="modal-header border border-white">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @yield('modalIndex')
+                            <div class="modal-footer border border-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')
@@ -145,4 +212,5 @@
     </div>
 </div>
 </body>
+    @yield('script')
 </html>
