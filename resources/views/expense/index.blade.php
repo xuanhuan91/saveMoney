@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h2>Expense manager</h2>
+        <br>
+        <h2>Quản lý khoản chi</h2>
 
 
 
@@ -12,18 +13,18 @@
                 @csrf
                 <div class="row" >
                     <div class="col">
-                        <label for="title">Type of Expense</label>
+                        <label for="title">Loại khoản chi</label>
                         <input type="text" class="form-control" name="title" value="{{old('title')}}">
                     </div>
 
                     <div class="col">
-                        <label for="title">Time</label>
+                        <label for="title">Thời gian</label>
                         <input type="date" class="form-control" name="datetime" value="{{old('datetime')}}">
                     </div>
                 </div>
 
                 <div >
-                    <input  style="margin: 10px " type="submit" class="btn btn-info " value="Search">
+                    <input  style="margin: 10px " type="submit" class="btn btn-info " value="Tìm kiếm">
                 </div>
 
             </form>
@@ -31,10 +32,12 @@
 
         <br><br>
 
-            <a class="btn btn-success" href="{{route('expense.create')}}">Add Expense</a>
-            </div>
+{{--                <button class="btn btn-success btn-block" href='{{route("expense.create")}}' style="width: 70%" data-toggle="modal"--}}
+{{--                        data-target="#exampleModal">Thêm mới loại khoản chi--}}
+{{--                </button>--}}
 
-        <br>
+            <a class="btn btn-success" href="{{route('expense.create')}}">Thêm mới loại khoản chi</a>
+        <br><br>
 
         <div class="flash-message">
             @foreach(['danger', 'success', 'warning', 'info'] as $type)
@@ -48,13 +51,13 @@
         </div>
         <table class="table">
             <tr>
-                <th>Time</th>
-                <th>Amount</th>
-                <th>Type Of Expense</th>
-                <th>Components Of Expense Type</th>
-                <th>Note</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Thời gian</th>
+                <th>Số tiền</th>
+                <th>Loại khoản chi</th>
+                <th>Thành phần loại khoản chi</th>
+                <th>Ghi chú</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
             </tr>
             @foreach($lsexpense as $expense )
                 <tr>
@@ -75,22 +78,25 @@
                     <td>{{$expense->note}}</td>
                     <td>
                             <form action="">
-                                <a class="btn btn-primary" style="width: 70px" href='{{route("expense.edit", $expense->id)}}'>Edit</a>
+                                <a class="btn btn-primary" style="width: 70px" href='{{route("expense.edit", $expense->id)}}'>Sửa</a>
                             </form>
+{{--                          <button class="btn btn-primary btn-block" href='{{route("expense.edit", $expense->id)}}' style="width: 70%" data-toggle="modal"--}}
+{{--                                data-target="#editModal">Sửa--}}
+{{--                          </button>--}}
                     </td>
 {{--                            <a class="btn btn-primary" href='{{route("expense.edit", $expense->id)}}'>Edit</a>--}}
 {{--                            <button class="btn btn-primary " href='{{route("expense.edit", $expense->id)}}' style="width: 40%"--}}
 {{--                                    >Edit--}}
 {{--                            </button>--}}
-{{--                            <button class="btn btn-primary btn-block" href='{{route("expense.create", $expense->id)}}' style="width: 40%" data-toggle="modal"--}}
-{{--                                    data-target="#exampleModal">Create--}}
+{{--                            <button class="btn btn-primary btn-block" href='{{route("expense.edit", $expense->id)}}' style="width: 40%" data-toggle="modal"--}}
+{{--                                    data-target="#exampleModal">Sửa--}}
 {{--                            </button>--}}
                     <td>
                             <form method="post" action="{{route('expense.destroy', $expense->id)}}"
                                   onsubmit='return confirm("Sure ?")'>
                                 @csrf
                                 @method('DELETE')
-                                <input class="btn btn-danger"  type="submit" value="Delete" >
+                                <input class="btn btn-danger"  type="submit" value="Xóa" >
                             </form>
                     </td>
                 </tr>
@@ -104,65 +110,64 @@
         }
     </script>
 @endsection
-
-{{--@section('modalBody')--}}
+{{--@section('modalEdit')--}}
 {{--    <div class="modal-body">--}}
-{{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Edit Expense</h5>--}}
+{{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Sửa  khoản chi</h5>--}}
 
-{{--        <form method="post"  action="{{route('expense.update',$expense->id)}}">--}}
+{{--        <form method="put"  action="{{ route('expense.update',$expense->id) }}" id="editExpense">--}}
 {{--            @csrf--}}
-{{--            @method('put')--}}
+{{--            @method('PUT')--}}
+{{--            <input type="number" id="editLimitId" style="display: none">--}}
 {{--            <div>--}}
 {{--                <div>--}}
-{{--                  <label for="amount" class="col-md-12 mb-0 mt-2">{{ __('Amount') }}</label>--}}
-{{--                  <div class="col-md-12">--}}
-{{--                    <input id="amount" type="text" class="form-control @error('amount') is-invalid @enderror" name="amount"--}}
-{{--                           value="{{ old('amount',$expense->amount) }}" required autocomplete="amount" autofocus>--}}
-
-{{--                    @error('amount')--}}
-{{--                    <span class="invalid-feedback" role="alert">--}}
-{{--                                                <strong>{{ $message }}</strong>--}}
-{{--                                            </span>--}}
-{{--                    @enderror--}}
-{{--                  </div>--}}
-{{--                 </div>--}}
-{{--                <div>--}}
-{{--                    <label for="expense_category" class="col-md-12 mb-0 mt-2">{{ __('Type of Expense') }}</label>--}}
-{{--                    <label for="expense_category">Type of Expense</label>--}}
+{{--                    <label for="amount" class="col-md-12 mb-0 mt-2 " >Số tiền </label>--}}
 {{--                    <div class="col-md-12">--}}
-{{--                      <select name="expense_category" id="expense_category" class="form-control select2"--}}
+{{--                        <input type="number" class="form-control" name="amount" required min="0"--}}
+{{--                               value="{{old('amount',$expense->amount) }}" id="amount">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div>--}}
+{{--                    <label for="expense_category" class="col-md-12 mb-0 mt-2">Loại khoản chi</label>--}}
+{{--                    <div class="col-md-12">--}}
+{{--                    <select name="expense_category" id="expense_category" class="form-control select2"--}}
 {{--                            onchange="chooseSubCategory(this)">--}}
 {{--                        @foreach($lscategoryexpense as $lscategory)--}}
 {{--                            <option value="{{$lscategory->id}}">{{$lscategory->name}}</option>--}}
 {{--                        @endforeach--}}
 
-{{--                      </select>--}}
+{{--                    </select>--}}
 {{--                    </div>--}}
+
 {{--                </div>--}}
-
-{{--                <div>--}}
-{{--                    <label for="note" class="col-md-12 mb-0 mt-2">{{ __('Note') }}</label>--}}
-
+{{--                <div class="row">--}}
 {{--                    <div class="col-md-12">--}}
-{{--                        <input id="note" type="text" class="form-control @error('note') is-invalid @enderror"--}}
-{{--                               name="note" value="{{ old('note',$expense->note) }}" required autocomplete="note">--}}
-
-{{--                        @error('note')--}}
-{{--                        <span class="invalid-feedback" role="alert">--}}
-{{--                                            <strong>{{ $message }}</strong>--}}
-{{--                                            </span>--}}
-{{--                        @enderror--}}
+{{--                        <label for="expense_category_id" class="col-md-12 mb-0 mt-2">Thành phần loại khoản chi</label>--}}
+{{--                        <select name="expense_category_id" id="subexpense_category" class="form-control select2">--}}
+{{--                            @foreach($subcategory as $subidcategory)--}}
+{{--                                <option value="{{$subidcategory->id}}">{{$subidcategory->name}}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <input type="date" class="form-control" id="endDateEdit" name="endDate" required onchange="checkEndDate('startDateEdit','endDateEdit')">--}}
+{{--                        </div>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
+{{--                <div>--}}
+{{--                    <label for="note" class="col-md-12 mb-0 mt-2">Ghi chú</label>--}}
+{{--                    <div class="col-md-12">--}}
+{{--                        <input type="text" class="form-control" name="note" value="{{old('note',$expense->note) }}"id="note">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
 {{--                <div class="col-md-12">--}}
 {{--                    <div class="row justify-content-around">--}}
 {{--                        <div class="col-4">--}}
 {{--                            <button type="button" class="col btn btn-outline-primary mb-0 mt-2" data-dismiss="modal">--}}
-{{--                                Cacel--}}
+{{--                                Hủy--}}
 {{--                            </button>--}}
 {{--                        </div>--}}
 {{--                        <div class="col-4">--}}
-{{--                            <button type="submit" class="col btn btn-primary mb-0 mt-2">Save</button>--}}
+{{--                            <button type="submit" class="col btn btn-primary mb-0 mt-2">Lưu</button>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
@@ -170,87 +175,83 @@
 {{--        </form>--}}
 {{--    </div>--}}
 {{--@endsection--}}
-
-
-
 {{--@section('modalBody')--}}
 {{--    <div class="modal-body">--}}
-{{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Add Expense</h5>--}}
+{{--        <h5 class="modal-title fw-bold text-center" id="exampleModalLabel">Thêm mới khoản chi</h5>--}}
 
-
-{{--        <form method="post"  action="{{route('expense.store',$expense->id)}}">--}}
+{{--        <form method="post"  action="{{route('expense.store')}}">--}}
 {{--            @csrf--}}
-{{--            @method('put')--}}
+{{--            @method('POST')--}}
 {{--            <div>--}}
-{{--                <label for="name" class="col-md-12 mb-0 mt-2">{{ __('Amount') }}</label>--}}
+
+{{--                <label for="name" class="col-md-12 mb-0 mt-2 " >Số tiền </label>--}}
 {{--                <div class="col-md-12">--}}
-{{--                    <input id="amount" type="text" class="form-control @error('amount') is-invalid @enderror" name="amount"--}}
-{{--                           value="{{ old('amount',$expense->amount) }}" required autocomplete="amount" autofocus>--}}
-
-{{--                    @error('amount')--}}
-{{--                    <span class="invalid-feedback" role="alert">--}}
-{{--                                                <strong>{{ $message }}</strong>--}}
-{{--                                            </span>--}}
-{{--                    @enderror--}}
+{{--                    <input type="number" class="form-control" name="amount"  value="{{old('amount')}} ">--}}
+{{--                    <input  class="form-control" type="text" name="amount" value="{{old('amount')}}"/>--}}
 {{--                </div>--}}
 {{--                <div>--}}
-{{--                    <label for="categoryExpenseId" class="col-md-12 mb-0 mt-2">{{ __('Category Expense Id') }}</label>--}}
-
+{{--                    <label for="expense_category" class="col-md-12 mb-0 mt-2">Loại khoản chi</label>--}}
 {{--                    <div class="col-md-12">--}}
-{{--                        <input id="categoryExpenseId" type="text" class="form-control @error('categoryExpenseId') is-invalid @enderror"--}}
-{{--                               name="categoryExpenseId" value="{{ old('categoryExpenseId',$expense->categoryExpenseId) }}" required autocomplete="categoryExpenseId">--}}
+{{--                        <select name="expense_category" id="expense_category" class="form-control select2"--}}
+{{--                                onchange="chooseSubCategory(this)">--}}
+{{--                            @foreach($lscategoryexpense as $lscategory)--}}
+{{--                                <option value="{{$lscategory->id}}">{{$lscategory->name}}</option>--}}
+{{--                            @endforeach--}}
 
-{{--                        @error('categoryExpenseId')--}}
-{{--                        <span class="invalid-feedback" role="alert">--}}
-{{--                                            <strong>{{ $message }}</strong>--}}
-{{--                                            </span>--}}
-{{--                        @enderror--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+{{--                <div>--}}
+{{--                    <label for="expense_category_id" class="col-md-12 mb-0 mt-2">Thành phần loại khoản chi</label>--}}
+{{--                    <div class="col-md-12">--}}
+{{--                        <select name="expense_category_id" id="expense_category_id" class="form-control select2"--}}
+{{--                                onchange="chooseSubCategory(this)">--}}
+{{--                            @foreach($subcategory as $subidcategory)--}}
+{{--                                <option value="{{$subidcategory->id}}">{{$subidcategory->name}}</option>--}}
+{{--                            @endforeach--}}
+
+{{--                        </select>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+{{--                <script type="text/javascript">--}}
+{{--                    function chooseSubCategory(answer) {--}}
+{{--                        return (answer.value)--}}
+{{--                    }--}}
+{{--                </script>--}}
+{{--                <div>--}}
+{{--                    <label for="note" class="col-md-12 mb-0 mt-2">Ghi chú</label>--}}
+{{--                    <div class="col-md-12">--}}
+{{--                        <input type="text" class="form-control" name="note" value="{{old('note') }}"id="note">--}}
 {{--                    </div>--}}
 {{--                </div>--}}
 {{--                <div>--}}
-{{--                    <label for="note" class="col-md-12 mb-0 mt-2">{{ __('Note') }}</label>--}}
-
+{{--                    <label for="note" class="col-md-12 mb-0 mt-2">Thời gian</label>--}}
 {{--                    <div class="col-md-12">--}}
-{{--                        <input id="note" type="note" class="form-control @error('note') is-invalid @enderror"--}}
-{{--                               name="note" value="{{ old('note',$expense->note) }}" required autocomplete="note">--}}
-
-{{--                        @error('note')--}}
-{{--                        <span class="invalid-feedback" role="alert">--}}
-{{--                                            <strong>{{ $message }}</strong>--}}
-{{--                                            </span>--}}
-{{--                        @enderror--}}
+{{--                        <input type="date" class="form-control" name="dateTime" value="{{old('dateTime') }}"id="dateTime">--}}
 {{--                    </div>--}}
 {{--                </div>--}}
 {{--                <div>--}}
-{{--                    <label for="dateTime" class="col-md-12 mb-0 mt-2">{{ __('DateTime') }}</label>--}}
+{{--                    <label for="" class="col-md-12 mb-0 mt-2"></label>--}}
 
 {{--                    <div class="col-md-12">--}}
-{{--                        <input id="dateTime" type="text" class="form-control @error('dateTime') is-invalid @enderror"--}}
-{{--                               name="dateTime" value="{{ old('dateTime',$expense->dateTime) }}" required autocomplete="dateTime">--}}
-
-
-{{--                        @error('dateTime')--}}
-{{--                        <span class="invalid-feedback" role="alert">--}}
-{{--                                            <strong>{{ $message }}</strong>--}}
-{{--                                            </span>--}}
-{{--                        @enderror--}}
 {{--                    </div>--}}
+{{--                </div>--}}
 {{--                <div class="col-md-12">--}}
 {{--                    <div class="row justify-content-around">--}}
 {{--                        <div class="col-4">--}}
 {{--                            <button type="button" class="col btn btn-outline-primary mb-0 mt-2" data-dismiss="modal">--}}
-{{--                                Cancel--}}
+{{--                                Hủy--}}
 {{--                            </button>--}}
 {{--                        </div>--}}
 {{--                        <div class="col-4">--}}
-{{--                            <button type="submit" class="col btn btn-primary mb-0 mt-2">Save</button>--}}
+{{--                            <button type="submit" class="col btn btn-primary mb-0 mt-2">Lưu</button>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
-{{--                </div>--}}
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </form>--}}
 {{--    </div>--}}
 {{--@endsection--}}
-
 

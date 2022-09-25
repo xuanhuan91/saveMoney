@@ -13,16 +13,11 @@
         <form method="post" action="{{route('expense.store')}}">
             @csrf
             <div class="form-group">
-                <label>Amount</label>
+                <label>Số Tiền</label>
                 <input  class="form-control" type="text" name="amount" value="{{old('amount')}}"/>
             </div>
-{{--            <div class="form-group">--}}
-{{--                <label>Category Expense Id</label>--}}
-{{--                <input  class="form-control" type="text" name="categoryExpenseId" value="{{old('categoryExpenseId')}}"/>--}}
-{{--            </div>--}}
-
             <div class="form-group ">
-                <label for="expense_category">Type of Expense</label>
+                <label for="expense_category">Loại khoản chi</label>
                 <select name="expense_category" id="expense_category" class="form-control select2"
                         onchange="chooseSubCategory(this)">
                     @foreach($lscategoryexpense as $lscategory)
@@ -33,7 +28,7 @@
             </div>
 
             <div class="form-group ">
-                <label for="expense_category_id">Components Of Expense Type</label>
+                <label for="expense_category_id">Thành phần loại khoản chi</label>
                 <select name="expense_category_id" id="subexpense_category" class="form-control select2">
                     @foreach($subcategory as $subidcategory)
                         <option value="{{$subidcategory->id}}">{{$subidcategory->name}}</option>
@@ -46,20 +41,12 @@
                     return (answer.value)
                 }
             </script>
-{{--            <div class="form-group">--}}
-{{--                <label>Type Of Expense</label>--}}
-{{--                <textarea  class="form-control" name="type">{{old('type')}}</textarea>--}}
-{{--            </div>--}}
-{{--            <div class="form-group">--}}
-{{--                <label>Components Of Expense Type</label>--}}
-{{--                <textarea  class="form-control" name="components">{{old('components')}}</textarea>--}}
-{{--            </div>--}}
-            <div class="form-group">
-                <label>Note</label>
+            <div>
+                <label>Ghi chú</label>
                 <textarea  class="form-control" name="note">{{old('note')}}</textarea>
             </div>
             <div class="form-group">
-                <label>Time</label>
+                <label>Thời gian</label>
                 <input  class="form-control" type="date" name="dateTime" value="{{old('dateTime')}}"/>
             </div>
             <div class="form-group py-1">

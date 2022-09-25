@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container">
-        <h4>Edit new Expense </h4>
+        <h4>Sửa loại khoản chi </h4>
         <div class="container">
             @if(count($errors) > 0)
                 <div class="alert alert-danger">
@@ -17,11 +17,11 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="amount">Amount</label>
+                <label for="amount">Số tiền</label>
                 <input type="text" class="form-control" id="amount" name="amount" value="{{old('amount',$cate->amount) }}" placeholder="Enter amount">
             </div>
             <div class="form-group ">
-                <label for="expense_category">Type of Expense</label>
+                <label for="expense_category">Loại khoản chi</label>
                 <select name="expense_category" id="expense_category" class="form-control select2"
                         onchange="chooseSubCategory(this)">
                     @foreach($lscategoryexpense as $lscategory)
@@ -31,7 +31,7 @@
                 </select>
             </div>
             <div class="form-group ">
-                <label for="expense_category_id">Components Of Expense Type</label>
+                <label for="expense_category_id">Thành phần loại khoản chi</label>
                 <select name="expense_category_id" id="subexpense_category" class="form-control select2">
                     @foreach($subcategory as $subidcategory)
                         <option value="{{$subidcategory->id}}">{{$subidcategory->name}}</option>
@@ -43,7 +43,7 @@
 {{--                <input type="text" class="form-control" id="type" name="type" value="{{old('type',$expense->type) }}" placeholder="Enter type">--}}
 {{--            </div>--}}
             <div class="form-group">
-                <label for="note">Note</label>
+                <label for="note">Ghi chú</label>
                 <input type="text" class="form-control" id="note" name="note" value="{{old('note',$cate->note) }}" placeholder="Enter note">
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
