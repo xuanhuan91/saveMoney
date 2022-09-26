@@ -25,7 +25,7 @@ class ReportController extends Controller
             $result->appends(['expenseReport' => true]);
         } else {
             $result = $this->incomeReport($input)
-                ->with('categoryIncome')
+                ->with('categoryIncome.subcategory')
                 ->latest()
                 ->paginate(self::LIMIT);
         }
@@ -86,7 +86,7 @@ class ReportController extends Controller
         $select = [DB::raw('COUNT(*) as total')];
         if (!empty($input['expenseReport'])) {
             $output = $this->expenseReport($filter)
-                ->join('category_expenses', 'category_expenses.id', '=', 'expenses.categoryIncomeId')
+                ->join('category_expenses', 'category_expenses.id', '=', 'expenses.categoryExpenseId')
                 ->groupBy('categoryExpenseId');
             array_push($select, 'categoryExpenseId', 'category_expenses.name');
         } else {

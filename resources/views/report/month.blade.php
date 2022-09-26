@@ -45,6 +45,13 @@
                                         <td>
                                             <div class="text-dark font-weight-bold">{{$row->categoryExpense->name}}</div>
                                         </td>
+                                        {{-- @if(count($row->categoryExpense->subcategory) !=  0)
+                                            <td>
+                                               <div class="text-dark font-weight-bold">{{$row->categoryExpense->subcategory->name}}</div>
+                                            </td>
+                                        @else --}}
+                                            <td></td>
+                                        {{-- @endif --}}
                                     @else
                                         <td></td>
                                     @endif
@@ -53,31 +60,17 @@
                                         <td>
                                             <div class="text-dark font-weight-bold">{{$row->categoryIncome->name}}</div>
                                         </td>
+                                        {{-- @if(count($row->categoryIncome->subcategory) !=  0)
+                                            <td>
+                                               <div class="text-dark font-weight-bold">{{$row->categoryIncome->subcategory}}</div>
+                                            </td>
+                                        @else --}}
+                                            <td></td>
+                                        {{-- @endif --}}
                                     @else
                                         <td></td>
                                     @endif
                                 @endif
-                                
-                                {{-- @if(!empty($row->categoryExpense) && !!count($row->categoryExpense->subcategory))
-                                    <td>
-                                    @php
-                                        $color = Config::get('color');
-                                        $colorNumber = count($color);
-                                        $increNumber = 0;
-                                    @endphp
-                                    @foreach($row->categoryExpense->subcategory as $category)
-                                        <span class="badge bg-{{$color[$increNumber++]}} rounded-pill">
-                                            {{$category->name}}
-                                        </span>
-                                        @if($increNumber == 9)
-                                            {{ $increNumber = 1 }}
-                                        @endif
-                                    @endforeach
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif --}}
-                                <td></td>
                                 <td>{{number_format($row->amount, 0)}}</td>
                                 <td>{{$row->note}}</td>
                             </tr>
@@ -192,11 +185,6 @@ const yourChart = new Chart(
         type: 'doughnut',
         data: {
             labels: category.map(c => c.name),
-            // [
-            //     'Red',
-            //     'Blue',
-            //     'Yellow'
-            // ],
             datasets: [{
                 label: 'My First Dataset',
                 data: category.map(c => c.total),
@@ -212,7 +200,7 @@ const yourChart = new Chart(
             }]
         }
     }
-)
+);
 
 </script>
 @endsection
