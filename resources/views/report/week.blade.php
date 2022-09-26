@@ -111,14 +111,23 @@
                     Biểu đồ thu chi
                     </div>
                     <span class="fw-light text-primary" style="font-size: 10px">
-                        {{\Carbon\Carbon::parse($row->dateTime)->format('d/m/Y')}}
+                        {{\Carbon\Carbon::now()->format('d/m/Y')}}
                     </span>
                 </div>
                 <div class="m-3">
                     <span class="fw-light text-primary">&#x26AC;</span>
                     Tổng thu: {{ number_format($chart->sum(fn($q) => $q->total), 0) }}</div>
                 <canvas id="myChart" class="mb-3"></canvas>
-              </div>
+            </div>
+
+            <div class="card border-0 mt-5">
+                <div class="border-bottom py-2 px-3 d-flex justify-content-between align-items-center">
+                    <div class="fs-6 fw-bold">
+                    Biểu đồ khoản thu
+                    </div>
+                </div>
+                <canvas id="yourChart" class="mb-3"></canvas>
+            </div>
         </div>
     </div>
 </div>
