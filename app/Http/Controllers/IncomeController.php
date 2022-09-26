@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\categoryIncome;
 use App\Models\income;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class IncomeController extends Controller
@@ -25,17 +23,8 @@ class IncomeController extends Controller
      */
     public function index(Request $request)
     {
-        $lscategoryincome = DB::table('category_incomes')->where('userId','=',Auth::User()->id)
-                                                              ->whereNull('subCategoryiD')->get();
-        $subcategory = DB::table('category_incomes')->where('userId','=',Auth::User()->id)
-                                                           ->whereNotNull('subCategoryiD')->get();
-
-//        $lscategoryincome = categoryIncome::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')->Paginate(5);
-
-
-//        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
-//        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
-
+        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
 //        $lsincome = income::all();
         $lsincome = income::whereNotNull('CategoryIncomeiD')->orderBy('created_at','desc')->Paginate(3);
         return view('income.index')->with(['lsincome' => $lsincome, 'lscategoryincome' => $lscategoryincome,'subcategory'=>$subcategory]);
@@ -49,10 +38,8 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        $lscategoryincome = DB::table('category_incomes')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
-        $subcategory = DB::table('category_incomes')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
-//        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
-//        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
+        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
         return view('income.create', compact('lscategoryincome', 'subcategory'));
     }
 
@@ -75,14 +62,11 @@ class IncomeController extends Controller
         $amount = $request->amount;
         $note = $request->input('note');
         $cate = new income();
-        $cate->userId = Auth::user()->id;
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
         $cate->categoryIncomeId = $categoryid;
         $cate->save();
-//        $cate = income::where('userId','=',Auth::user()->id);
-
 
         $request->session()->flash('success', 'Income created sucessfully');
         return redirect(route('income.index'));
@@ -121,7 +105,6 @@ class IncomeController extends Controller
 
         $cate = income::find($id);
         $request->session()->flash('success', 'Update sucessfully');
-
         return view('income.edit')->with(['cate' => $cate, 'lscategoryincome' => $lscategoryincome, 'subcategory' => $subcategory]);
     }
 
@@ -140,34 +123,21 @@ class IncomeController extends Controller
 //            'name'=> 'required |min:5|max:500'
 //        ]);
 
-
-        $result='';
-//        $categoryid = $request->income_category_id;
-        $categoryid = $request->input('cateIncome');
-
-//        $dateTime = $request->dateTime;
-        $dateTime = $request->input('date');
-
-//        $amount = $request->amount;
-        $amount = $request->input('amount');
-
+        $categoryid = $request->income_category_id;
+        $dateTime = $request->dateTime;
+        $amount = $request->amount;
         $note = $request->input('note');
 
-        $cate = income::find($id);
+        $cate = income:: Find($id);
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
         $cate->categoryIncomeId = $categoryid;
         $cate->save();
-        $result ='sua thanh cong';
-        return $result;
-//
-//        $request->session()->flash('success', 'Income created sucessfully');
 
 
-
-
-//        return redirect(route('income.index'));
+        $request->session()->flash('success', 'Income created sucessfully');
+        return redirect(route('income.index'));
 
 //           return view('income.create', compact('lscategoryincome', 'subcategory'));
     }
