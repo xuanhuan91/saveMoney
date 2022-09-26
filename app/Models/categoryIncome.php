@@ -14,6 +14,10 @@ class categoryIncome extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['name', 'parent_id'];
 
+    public function subcategory()
+    {
+        return $this->hasMany(categoryIncome::class, 'subCategoryiD');
+    }
 
     public function income()
     {
