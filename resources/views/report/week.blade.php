@@ -111,20 +111,30 @@
                     Biểu đồ thu chi
                     </div>
                     <span class="fw-light text-primary" style="font-size: 10px">
-                        {{\Carbon\Carbon::parse($row->dateTime)->format('d/m/Y')}}
+                        {{\Carbon\Carbon::now()->format('d/m/Y')}}
                     </span>
                 </div>
                 <div class="m-3">
                     <span class="fw-light text-primary">&#x26AC;</span>
                     Tổng thu: {{ number_format($chart->sum(fn($q) => $q->total), 0) }}</div>
                 <canvas id="myChart" class="mb-3"></canvas>
-              </div>
+            </div>
+
+            <div class="card border-0 mt-5">
+                <div class="border-bottom py-2 px-3 d-flex justify-content-between align-items-center">
+                    <div class="fs-6 fw-bold">
+                    Biểu đồ khoản thu
+                    </div>
+                </div>
+                <canvas id="yourChart" class="mb-3"></canvas>
+            </div>
         </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
 const chart = {!! $chart !!}
+const category = {!! $category !!}
 const labels = chart.sort((a, b) => new Date(a.date) - new Date(b.date))
 
 const getDateOfWeek = (w) => {
@@ -132,47 +142,69 @@ const getDateOfWeek = (w) => {
     return date.getDate() + "/" + (date.getMonth() + 1);
 }
 
-const data = {
-    labels: labels.map((label) => getDateOfWeek(label.date)),
-    datasets: [{
-        backgroundColor: 'rgba(16, 156, 241, 0.2)',
-        borderColor: '#109CF1',
-        data: labels.map(label => label.total),
-        fill: 'start'
-    }]
-};
 
-const config = {
-    type: 'line',
-    data: data,
-    options: {
-        elements: {
-            line: {
-                tension: 0.4
-            }
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    {
+        type: 'line',
+        data: {
+            labels: labels.map((label) => getDateOfWeek(label.date)),
+            datasets: [{
+                backgroundColor: 'rgba(16, 156, 241, 0.2)',
+                borderColor: '#109CF1',
+                data: labels.map(label => label.total),
+                fill: 'start'
+            }]
         },
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                min: 0,
-                max: 31,
-                ticks: {
-                    stepSize: 2
+        options: {
+            elements: {
+                line: {
+                    tension: 0.4
                 }
             },
-            y: {
-                min: 0,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    min: 0,
+                    max: 31,
+                    ticks: {
+                        stepSize: 2
+                    }
+                },
+                y: {
+                    min: 0,
+                }
             }
         }
     }
-};
-const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
 );
+
+const yourChart = new Chart(
+    document.getElementById('yourChart'),
+    {
+        type: 'doughnut',
+        data: {
+            labels: category.map(c => c.name),
+            datasets: [{
+                label: 'My First Dataset',
+                data: category.map(c => c.total),
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(255, 19, 132)',
+                    'rgb(54, 162, 135)',
+                    'rgb(155, 205, 86)'
+                ],
+            hoverOffset: 4
+            }]
+        }
+    }
+);
+
 </script>
 @endsection
