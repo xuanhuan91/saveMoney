@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\categoryExpense;
 use App\Models\Expense;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +22,12 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
-        $lsexpense = Expense::all();
-        return view('expense.index')->with(['lsexpense' => $lsexpense, 'lscategoryexpense' => $lscategoryexpense]);
+        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+//        $lsexpense = Expense::all();
+        $lsexpense = Expense::whereNotNull('CategoryExpenseiD')->orderBy('created_at','desc')->Paginate(3);
+        return view('expense.index')->with(['lsexpense' => $lsexpense, 'lscategoryexpense' => $lscategoryexpense,'subcategory'=>$subcategory]);
+
     }
 
 
@@ -96,8 +100,7 @@ class ExpenseController extends Controller
         $cate = Expense::find($id);
         $request->session()->flash('success', 'Update sucessfully');
         return view('expense.edit')->with(['cate' => $cate, 'lscategoryexpense' => $lscategoryexpense, 'subcategory' => $subcategory]);
-//        $expense = Models\Expense::find($id);
-//        return view('expense.edit')->with('expense', $expense);
+//
     }
 
     /**
@@ -109,21 +112,23 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoryid = $request->expense_category_id;
-        $dateTime = $request->dateTime;
-        $amount = $request->amount;
+        $result ='';
+        $categoryid = $request->input('cateExpense');
+        $dateTime = $request->input('date');
+        $amount = $request->input('amount');
         $note = $request->input('note');
 
-        $cate = Expense:: Find($id);
+        $cate = Expense:: find($id);
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
-        $cate->categoryid = $categoryid;
+        $cate->categoryExpenseId = $categoryid;
         $cate->save();
+        $result ='Edit Succesfull';
+        return $result;
 
-
-        $request->session()->flash('success', 'Expense update sucessfully');
-        return redirect(route('expense.index'));
+//        $request->session()->flash('success', 'Expense update sucessfully');
+//        return redirect(route('expense.index'));
     }
 
     /**
@@ -161,9 +166,9 @@ class ExpenseController extends Controller
 
                 $lsexpense = $lsexpense->get();
                 return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory', 'title'));
-            } elseif (is_null($title) && (!is_null($dateTime))) {
-                $lsexpense = Expense::all()->where('dateTime', $dateTime);
-                return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
+//            } elseif (is_null($title) && (!is_null($dateTime))) {
+//                $lsexpense = Expense::all()->where('dateTime', $dateTime);
+//                return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
             } else {
                 $lsexpense = Expense::all()->where('dateTime', $dateTime)
                     ->where('title', $title);
