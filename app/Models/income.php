@@ -17,4 +17,9 @@ class income extends Model
     {
         return $this->belongsTo(categoryIncome::class, 'categoryIncomeId');
     }
+
+    public function User()
+    {
+        return $this->belongsTo('App\Models\User','userId');
+    }
 }

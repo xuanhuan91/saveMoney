@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\categoryIncome;
 use App\Models\income;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class IncomeController extends Controller
@@ -21,14 +23,24 @@ class IncomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $lscategoryincome = DB::table('category_incomes')->where('userId','=',Auth::User()->id)
+                                                              ->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_incomes')->where('userId','=',Auth::User()->id)
+                                                           ->whereNotNull('subCategoryiD')->get();
 
-        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
-        $lsincome = income::all();
-        return view('income.index')->with(['lsincome' => $lsincome, 'lscategoryincome' => $lscategoryincome]);
+//        $lscategoryincome = categoryIncome::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')->Paginate(5);
 
+
+//        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
+//        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
+
+//        $lsincome = income::all();
+        $lsincome = income::whereNotNull('CategoryIncomeiD')->orderBy('created_at','desc')->Paginate(3);
+        return view('income.index')->with(['lsincome' => $lsincome, 'lscategoryincome' => $lscategoryincome,'subcategory'=>$subcategory]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -37,8 +49,10 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
-        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
+        $lscategoryincome = DB::table('category_incomes')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_incomes')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+//        $lscategoryincome = DB::table('category_incomes')->whereNull('subCategoryiD')->get();
+//        $subcategory = DB::table('category_incomes')->whereNotNull('subCategoryiD')->get();
         return view('income.create', compact('lscategoryincome', 'subcategory'));
     }
 
@@ -60,13 +74,15 @@ class IncomeController extends Controller
         $dateTime = $request->dateTime;
         $amount = $request->amount;
         $note = $request->input('note');
-
         $cate = new income();
+        $cate->userId = Auth::user()->id;
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
         $cate->categoryIncomeId = $categoryid;
         $cate->save();
+//        $cate = income::where('userId','=',Auth::user()->id);
+
 
         $request->session()->flash('success', 'Income created sucessfully');
         return redirect(route('income.index'));
@@ -105,8 +121,11 @@ class IncomeController extends Controller
 
         $cate = income::find($id);
         $request->session()->flash('success', 'Update sucessfully');
+
         return view('income.edit')->with(['cate' => $cate, 'lscategoryincome' => $lscategoryincome, 'subcategory' => $subcategory]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -121,21 +140,34 @@ class IncomeController extends Controller
 //            'name'=> 'required |min:5|max:500'
 //        ]);
 
-        $categoryid = $request->income_category_id;
-        $dateTime = $request->dateTime;
-        $amount = $request->amount;
+
+        $result='';
+//        $categoryid = $request->income_category_id;
+        $categoryid = $request->input('cateIncome');
+
+//        $dateTime = $request->dateTime;
+        $dateTime = $request->input('date');
+
+//        $amount = $request->amount;
+        $amount = $request->input('amount');
+
         $note = $request->input('note');
 
-        $cate = income:: Find($id);
+        $cate = income::find($id);
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
-        $cate->categoryid = $categoryid;
+        $cate->categoryIncomeId = $categoryid;
         $cate->save();
+        $result ='sua thanh cong';
+        return $result;
+//
+//        $request->session()->flash('success', 'Income created sucessfully');
 
 
-        $request->session()->flash('success', 'Income created sucessfully');
-        return redirect(route('income.index'));
+
+
+//        return redirect(route('income.index'));
 
 //           return view('income.create', compact('lscategoryincome', 'subcategory'));
     }
@@ -175,11 +207,20 @@ class IncomeController extends Controller
 
                 $lsincome = $lsincome->get();
                 return view('income.index', compact('lsincome', 'lscategoryincome', 'subcategory', 'title'));
-            } elseif (is_null($title) && (!is_null($dateTime))) {
-                $lsincome = income::all()->where('dateTime', $dateTime);
-                return view('income.index', compact('lsincome', 'subcategory', 'subcategory'));
+            }if (is_null($title) && (!is_null($dateTime))) {
+                $lsincome = income::query()->whereHas('categoryincome', function ($query) use ($dateTime) {
+                    return $query
+                        ->join('category_incomes as parent_categoryincome', 'parent_categoryincome.id', '=', 'category_incomes.subCategoryiD')
+                        ->where('parent_categoryincome.dateTime', '=', $dateTime);
+                });
+                $lsincome = $lsincome->get();
+                return view('income.index', compact('lsincome', 'lscategoryincome', 'subcategory', 'title'));
+
+//                $lsincome = income::query()->whereHas('dateTime', $dateTime);
+//                return view('income.index', compact('lsincome', 'subcategory', 'subcategory'))
+//                    ->where('parent_categoryincome.dateTime', '=', $dateTime);;
             } else {
-                $lsincome = income::all()->where('dateTime', $dateTime)
+                $lsincome = income::query()->whereHas('dateTime', $dateTime)
                     ->where('title', $title);
                 return view('income.index', compact('lsincome', 'subcategory', 'subcategory'));
             }
