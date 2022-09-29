@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\categoryExpense;
-use App\Models\Expense;
+use App\Models\expense;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +23,14 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
-        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+//        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+//        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)
+            ->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_expenses')->where('userId','=',Auth::User()->id)
+            ->whereNotNull('subCategoryiD')->get();
 //        $lsexpense = Expense::all();
-        $lsexpense = Expense::whereNotNull('CategoryExpenseiD')->orderBy('created_at','desc')->Paginate(3);
+        $lsexpense = expense::whereNotNull('CategoryExpenseiD')->orderBy('created_at','desc')->Paginate(3);
         return view('expense.index')->with(['lsexpense' => $lsexpense, 'lscategoryexpense' => $lscategoryexpense,'subcategory'=>$subcategory]);
 
     }
@@ -38,8 +43,10 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
-        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+//        $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
+//        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
         return view('expense.create', compact('lscategoryexpense', 'subcategory'));
 //
     }
@@ -60,7 +67,8 @@ class ExpenseController extends Controller
         $amount = $request->amount;
         $note = $request->input('note');
 
-        $cate = new Expense();
+        $cate = new expense();
+        $cate->userId = Auth::user()->id;
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
@@ -97,7 +105,7 @@ class ExpenseController extends Controller
         $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
 
 
-        $cate = Expense::find($id);
+        $cate = expense::find($id);
         $request->session()->flash('success', 'Update sucessfully');
         return view('expense.edit')->with(['cate' => $cate, 'lscategoryexpense' => $lscategoryexpense, 'subcategory' => $subcategory]);
 //
@@ -118,7 +126,7 @@ class ExpenseController extends Controller
         $amount = $request->input('amount');
         $note = $request->input('note');
 
-        $cate = Expense:: find($id);
+        $cate = expense:: find($id);
         $cate->dateTime = $dateTime;
         $cate->amount = $amount;
         $cate->note = $note;
@@ -139,7 +147,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $cate = Expense::find($id);
+        $cate = expense::find($id);
         $cate->delete();
         $request->session()->flash('success', 'Delete sucessfully');
         return redirect(route('expense.index'));
@@ -154,11 +162,11 @@ class ExpenseController extends Controller
         $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
 
         if (is_null($title) && (is_null($dateTime))) {
-            $lsexpense = Expense::query()->get();
+            $lsexpense = expense::query()->get();
             return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory'));
         } else {
             if (!is_null($title) && (is_null($dateTime))) {
-                $lsexpense = Expense::query()->whereHas('categoryexpense', function ($query) use ($title) {
+                $lsexpense = expense::query()->whereHas('categoryexpense', function ($query) use ($title) {
                     return $query
                         ->join('category_expenses as parent_categoryexpense', 'parent_categoryexpense.id', '=', 'category_expenses.subCategoryiD')
                         ->where('parent_categoryexpense.name', '=', $title);
@@ -170,7 +178,7 @@ class ExpenseController extends Controller
 //                $lsexpense = Expense::all()->where('dateTime', $dateTime);
 //                return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
             } else {
-                $lsexpense = Expense::all()->where('dateTime', $dateTime)
+                $lsexpense = expense::all()->where('dateTime', $dateTime)
                     ->where('title', $title);
                 return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
             }
