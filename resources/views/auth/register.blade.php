@@ -15,7 +15,7 @@
                         @csrf
 
                         <div>
-                            <label for="name" class="col-form-label text-md-end">{{ __('Tên tài khoản') }}</label>
+                            <label for="name" class="col-form-label text-md-end">{{ __('Họ và tên') }}</label>
 
                             <div class="col-md-12">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -32,7 +32,7 @@
                             <label for="email" class="col-form-label text-md-end">{{ __('Email') }}</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input onchange="takeUser()" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -64,10 +64,10 @@
                         </div>
                         </div>
                         <div>
-                            <label for="" class="col-form-label text-md-end">{{ __('Họ và tên') }}</label>
+                            <label for="" class="col-form-label text-md-end">{{ __('Tên đăng nhập') }}</label>
 
                             <div class="col-md-12">
-                                <input id="" type="text" class="form-control" name="" value="{{ old('') }}">
+                                <input id="userName" type="text" class="form-control" name="" value="{{ old('') }}" disabled>
                             </div>
                         </div>
                         <div>
@@ -92,4 +92,10 @@
         </div>
     </div>
 </div>
+    <script>
+        function takeUser(){
+            var email = document.getElementById('email').value;
+            document.getElementById('userName').value = email;
+        }
+    </script>
 @endsection
