@@ -132,7 +132,7 @@
                             >Edit</a>
                             <span style="margin-left: 2px"></span>
                             <form method="post" action="{{route('income.destroy', $income->id)}}"
-                                  onsubmit='return confirm("You want to delete ?? ")'>
+                                  onsubmit='return confirm("Xác nhận xóa thông tin ? ")'>
                                 @csrf
                                 @method('DELETE')
                                 <input class="btn btn-danger" type="submit" value="Delete" >
@@ -147,7 +147,7 @@
 
     <script type="text/javascript">
         function confirmDelete() {
-            var value = confirm("You want to delete ? ");
+            var value = confirm("Xác nhận xóa ? ");
             return value;
         }
     </script>
