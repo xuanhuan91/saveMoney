@@ -53,9 +53,21 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('expense.index') }}">Quản lý khoản chi <span class="sr-only"></span></a>
                 </li>
+
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{route('report-month')}}">Quản lý báo cáo <span class="sr-only"></span></a>
+{{--                    <a class="nav-link" href="{{route('report-month')}}">Quản lý báo cáo <span class="sr-only"></span></a>--}}
+
+                    <a class="dropdown-toggle nav-link" href="{{route('report-month')}}" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Quản lý báo cáo
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="{{route('report-week')}}">Báo cáo tuần</a>
+                        <a class="dropdown-item" href="{{route('report-month')}}">Báo cáo tháng</a>
+                    </div>
                 </li>
+
+
                 <li class="nav-item active">
                     <a class="nav-link" href="{{route('dashboard.index')}}">Bảng tin<span class="sr-only"></span></a>
                 </li>
