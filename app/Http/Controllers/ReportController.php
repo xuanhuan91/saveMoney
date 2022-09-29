@@ -87,12 +87,12 @@ class ReportController extends Controller
         if (!empty($input['expenseReport'])) {
             $output = $this->expenseReport($filter)
                 ->join('category_expenses', 'category_expenses.id', '=', 'expenses.categoryExpenseId')
-                ->groupBy('categoryExpenseId');
+                ->groupBy('expenses.categoryExpenseId');
             array_push($select, 'categoryExpenseId', 'category_expenses.name');
         } else {
             $output = $this->incomeReport($filter)
                 ->join('category_incomes', 'category_incomes.id', '=', 'incomes.categoryIncomeId')
-                ->groupBy('categoryIncomeId');
+                ->groupBy('incomes.categoryIncomeId');
             array_push($select, 'categoryIncomeId', 'category_incomes.name');
         }
 

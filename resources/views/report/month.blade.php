@@ -45,13 +45,15 @@
                                         <td>
                                             <div class="text-dark font-weight-bold">{{$row->categoryExpense->name}}</div>
                                         </td>
-                                        {{-- @if(count($row->categoryExpense->subcategory) !=  0)
+                                        @if(count($row->categoryExpense->subcategory) !=  0)
                                             <td>
-                                               <div class="text-dark font-weight-bold">{{$row->categoryExpense->subcategory->name}}</div>
+                                                @foreach ($row->categoryExpense->subcategory as $category)
+                                                    <span class="text-dark font-weight-bold">{{$category->name}}, </span>                                                
+                                                @endforeach
                                             </td>
-                                        @else --}}
+                                        @else
                                             <td></td>
-                                        {{-- @endif --}}
+                                        @endif
                                     @else
                                         <td></td>
                                     @endif
@@ -60,13 +62,15 @@
                                         <td>
                                             <div class="text-dark font-weight-bold">{{$row->categoryIncome->name}}</div>
                                         </td>
-                                        {{-- @if(count($row->categoryIncome->subcategory) !=  0)
+                                        @if(count($row->categoryIncome->subcategory) !=  0)
                                             <td>
-                                               <div class="text-dark font-weight-bold">{{$row->categoryIncome->subcategory}}</div>
+                                                @foreach ($row->categoryIncome->subcategory as $category)
+                                                    <span class="text-dark font-weight-bold">{{$category->name}}, </span>                                                
+                                                @endforeach
                                             </td>
-                                        @else --}}
+                                        @else
                                             <td></td>
-                                        {{-- @endif --}}
+                                        @endif
                                     @else
                                         <td></td>
                                     @endif

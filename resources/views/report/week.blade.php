@@ -36,50 +36,50 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $row)
-                        <tr class="text-secondary">
-                            <td>{{\Carbon\Carbon::parse($row->dateTime)->format('d/m/Y')}}</td>
-                            @if(request()->expenseReport)
-                                @if(!empty($row->categoryExpense))
-                                    <td>
-                                        <div class="text-dark font-weight-bold">{{$row->categoryExpense->name}}</div>
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif
-                            @else
-                                @if(!empty($row->categoryIncome))
-                                    <td>
-                                        <div class="text-dark font-weight-bold">{{$row->categoryIncome->name}}</div>
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif
-                            @endif
-                            {{-- @if(!empty($row->categoryExpense) && !!count($row->categoryExpense->subcategory))
-                                <td>
-                                @php
-                                    $color = Config::get('color');
-                                    $colorNumber = count($color);
-                                    $increNumber = 0;
-                                @endphp
-                                @foreach($row->categoryExpense->subcategory as $category)
-                                    <span class="badge bg-{{$color[$increNumber++]}} rounded-pill">
-                                        {{$category->name}}
-                                    </span>
-                                    @if($increNumber == 9)
-                                        {{ $increNumber = 1 }}
+                        @if (count($data))
+                            @foreach($data as $row)
+                            <tr class="text-secondary">
+                                <td>{{\Carbon\Carbon::parse($row->updated_at)->format('d/m/Y')}}</td>
+                                @if(request()->expenseReport)
+                                    @if(!empty($row->categoryExpense))
+                                        <td>
+                                            <div class="text-dark font-weight-bold">{{$row->categoryExpense->name}}</div>
+                                        </td>
+                                        @if(count($row->categoryExpense->subcategory) !=  0)
+                                            <td>
+                                                @foreach ($row->categoryExpense->subcategory as $category)
+                                                    <span class="text-dark font-weight-bold">{{$category->name}}, </span>                                                
+                                                @endforeach
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @else
+                                        <td></td>
                                     @endif
-                                @endforeach
-                                </td>
-                            @else
-                                <td></td>
-                            @endif --}}
-                            <td></td>
-                            <td>{{number_format($row->amount, 0)}}</td>
-                            <td>{{$row->note}}</td>
-                        </tr>
-                        @endforeach
+                                @else
+                                    @if(!empty($row->categoryIncome))
+                                        <td>
+                                            <div class="text-dark font-weight-bold">{{$row->categoryIncome->name}}</div>
+                                        </td>
+                                        @if(count($row->categoryIncome->subcategory) !=  0)
+                                            <td>
+                                                @foreach ($row->categoryIncome->subcategory as $category)
+                                                    <span class="text-dark font-weight-bold">{{$category->name}}, </span>                                                
+                                                @endforeach
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @else
+                                        <td></td>
+                                    @endif
+                                @endif
+                                <td>{{number_format($row->amount, 0)}}</td>
+                                <td>{{$row->note}}</td>
+                            </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 <div class="d-flex align-items-center justify-content-center">
