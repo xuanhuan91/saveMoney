@@ -27,8 +27,14 @@ class dashboardController extends Controller
         }
         $limits = expenseLimit::where('userId','=',Auth::user()->id)->orderBy('startDate','desc')->Paginate(5);
 
-        $incomes = income::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')->Paginate(5);
-        $expenses = expense::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')->Paginate(5);
+        $incomes = income::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')
+//            ->Paginate(5)
+        ->get()
+        ;
+        $expenses = expense::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')
+//            ->Paginate(5)
+        ->get()
+        ;
 
         return view('dashboard.index',compact('currentLimit','limits','incomes','expenses'));
     }
