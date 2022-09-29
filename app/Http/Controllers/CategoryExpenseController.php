@@ -16,7 +16,8 @@ class CategoryExpenseController extends Controller
     public function index()
     {
         $lsCategoryExpense = \App\Models\categoryExpense::all();
-        return view('categoryExpense.index')->with('lsCategoryExpense', $lsCategoryExpense);
+        $laCategoryExpense = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        return view('categoryExpense.index')->with('lsCategoryExpense',$lsCategoryExpense);
     }
 
     /**
@@ -46,7 +47,7 @@ class CategoryExpenseController extends Controller
         $name = $request->input('name');
 
         $ctexpense = new \App\Models\CategoryExpense();
-        $ctexpense->name =$name;
+        $ctexpense->name = $name;
         $ctexpense->subCategoryiD = $subCategoryiD;
         $ctexpense->save();
 
