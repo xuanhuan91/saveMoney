@@ -28,10 +28,10 @@
             <div class="navbar navbar-light bg-white">
                 <ul class="navbar-nav justify-content-end flex-grow-1 ps-4">
                     <li class="nav-item active">
-                        <img src="{{ URL::to('/') }}/img/img_1.png" style="width: 32px"/>
+                        <a href="{{route('dashboard.index')}}"><img src="{{ URL::to('/') }}/img/img_1.png" style="width: 32px"/></a>
                     </li>
                     <li class="nav-item active">
-                        <img src="{{ URL::to('/') }}/img/img_2.png" style="width: 79px"/>
+                        <a href="{{route('dashboard.index')}}"><img src="{{ URL::to('/') }}/img/img_2.png" style="width: 79px"/></a>
                     </li>
                     <li>
                         <hr class="table-group-divider" style="width: 150%">
@@ -41,6 +41,9 @@
         </nav>
         <nav class="navbar navbar-light bg-white shadow-sm" style="height: 100vh">
             <ul class="navbar-nav justify-content-end flex-grow-1 ps-4" style="position: absolute;top:30px">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{route('dashboard.index')}}">Bảng tin<span class="sr-only"></span></a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{route(('CategoryIncome.index'))}}">Quản lý loại khoản thu <span class="sr-only"></span></a>
                 </li>
@@ -68,9 +71,7 @@
                 </li>
 
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{route('dashboard.index')}}">Bảng tin<span class="sr-only"></span></a>
-                </li>
+
                 <li>
                     <hr class="table-group-divider" style="width: 150%">
                 </li>

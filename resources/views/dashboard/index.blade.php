@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+    <?php use Carbon\Carbon?>
     <div class="container">
         <div class="container" style="padding-top: 10px">
             <h4>Bảng tin</h4>
@@ -44,8 +45,11 @@
                             </div>
                             <div class="row">
                                 <h4 class="fw-bolder"><?php
-                                    echo number_format($currentLimit);
+                                    if($currentLimit->count() != 0){
+                                        echo number_format($currentLimit);
+                                    }
                                     ?> VND</h4>
+                                <span class="text-danger fw-bold">{{$warning}}</span>
 
                             </div>
                         </div>
@@ -53,11 +57,11 @@
                 </div>
                 <div class="row bg-white" style="height: 475px; margin-top: 20px">
                     <div class="row" style="padding-top: 20px;height: 30px">
-                        <h6>Tổng số khoản thu/chi trong tháng</h6>
+                        <h6>Tổng số khoản thu/chi trong tháng {{Carbon::now()->month}}</h6>
                     </div>
                     <div class="row"
-                         style="border-radius: 6px;background-color: #F5F6F8;height: 102px;width: 500px;">
-                        <div class="col" style="margin:8px;border-radius: 4px;" id="iconIncome" onclick="changeCss('iconIncome','iconExpense','tableIncome','tableExpense')">
+                         style="border-radius: 6px;background-color: #F5F6F8;height: 102px;width: 95%; margin: auto">
+                        <div class="col" style="margin:5px;border-radius: 4px; height: 90%" id="iconIncome" onclick="changeCss('iconIncome','iconExpense','tableIncome','tableExpense')">
                             <div class="row">
                                 <div class="col-3">
                                     <img src="{{ URL::to('/') }}/img/img_9.png" style="width: 32px;padding-top: 15px"/>
@@ -65,12 +69,12 @@
                                 <div class="col-9" style="padding-top: 15px">
                                     <p style="margin-bottom: 0">Khoản thu</p>
                                     <h4 class="fw-bolder"><?php
-                                        echo number_format($incomes->sum('amount'));
+                                        echo number_format($sumIncome);
                                         ?> VND</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col" style="background-color: #FFFFFF;margin:8px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);border-radius: 4px;" id="iconExpense" onclick="changeCss('iconExpense','iconIncome','tableExpense','tableIncome')">
+                        <div class="col" style="height: 90%;background-color: #FFFFFF;margin:5px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);border-radius: 4px;" id="iconExpense" onclick="changeCss('iconExpense','iconIncome','tableExpense','tableIncome')">
                             <div class="row">
                                 <div class="col-3">
                                     <img src="{{ URL::to('/') }}/img/img_8.png" style="width: 32px;padding-top: 15px"/>
@@ -79,7 +83,7 @@
                                     <p style="margin-bottom: 0">Khoản chi</p>
                                     <h4 class="fw-bolder">
                                         <?php
-                                        echo number_format($expenses->sum('amount'));
+                                        echo number_format($sumExpense);
                                         ?> VND
                                     </h4>
                                 </div>
@@ -88,62 +92,140 @@
                     </div>
 
 
-                    <div class="row" style="">
-                        <table class="table" id="tableIncome" style="display: none">
-                            <thead>
-                            <tr class="text-secondary">
-                                <td scope="col" class="align-middle">Thời gian</td>
-                                <td scope="col" class="align-middle">Loại khoản thu</td>
-                                <td scope="col" class="align-middle">Số tiền</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($incomes as $income)
-                                <tr>
-                                    <td>
-                                        {{$income->dateTime}}
-                                    </td>
-                                    <td>
-                                        {{$income->categoryIncome->name}}
-                                    </td>
-                                    <td class="text-end">
-                                        <?php
-                                        echo number_format($income->amount);
-                                        ?> VND
-                                    </td>
+                    <div class="row" style="" >
+                        <div id="tableIncome" style="display: none">
+                            <table class="table" id="tbIc">
+                                <thead class="text-center">
+                                <tr class="text-secondary">
+                                    <td class="col-4" class="align-middle">Thời gian</td>
+                                    <td class="col-4" class="align-middle">Loại khoản thu</td>
+                                    <td class="col-4" class="align-middle">Số tiền</td>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-{{--                        {{$incomes->links()}}--}}
-                        <table class="table" id="tableExpense" style="">
-                            <thead>
-                            <tr class="text-secondary">
-                                <td scope="col" class="align-middle">Thời gian</td>
-                                <td scope="col" class="align-middle">Loại khoản thu</td>
-                                <td scope="col" class="align-middle">Số tiền</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($expenses as $expense)
-                                <tr>
-                                    <td>
-                                        {{$expense->dateTime}}
-                                    </td>
-                                    <td>
-                                        {{$expense->categoryExpense->name}}
-                                    </td>
-                                    <td class="text-end">
-                                        <?php
-                                        echo number_format($expense->amount);
-                                        ?> VND
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-{{--                        {{$expenses->links()}}--}}
+                                </thead>
+                                <tbody >
+                                @foreach($incomes as $income)
+                                    <tr>
+                                        <td>
+                                            <?php
+                                            $y = Carbon::create($income->dateTime);
+                                            echo($y->format('d-m-Y'));
+                                            ?>
+                                        </td>
+                                        <td>
+                                            {{$income->categoryIncome->name}}
+                                        </td>
+                                        <td class="text-end">
+                                            <?php
+                                            echo number_format($income->amount);
+                                            ?> VND
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            <nav class="d-flex justify-items-center justify-content-between">
+                                <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
+                                    <div>
+                                        <p class="small text-muted">
+                                            Xem
+                                            <span class="fw-semibold">{{$incomes->firstItem()}}</span>
+                                            đến
+                                            <span class="fw-semibold">{{$incomes->lastItem()}}</span>
+                                            của
+                                            <span class="fw-semibold">{{$incomes->total()}}</span>
+                                            bản ghi
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <ul class="pagination" id="pageIncome">
 
+                                            <li class="page-item disabled pageIncome" aria-disabled="true" aria-label="« Previous">
+                                                <a class="page-link" href="{{$incomes->previousPageUrl()}}">‹</a>
+                                            </li>
+                                            @foreach($incomes->getUrlRange(1, $incomes->lastPage()) as $index => $page)
+                                                @if($index == $incomes->currentPage())
+                                                        <li class="page-item active" aria-current="page"><span class="page-link">{{$index}}</span></li>
+                                                    </a>
+                                                @else
+                                                    <li class="page-item pageIncome" id="{{$index}}"><a class="page-link" href="{{$page}}">{{$index}}</a></li>
+                                                @endif
+                                            @endforeach
+
+                                            <li class="page-item pageIncome">
+                                                <a class="page-link" href="{{$incomes->nextPageUrl()}}">›</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+{{--                            {{$incomes->appends(Request::all())->links()}}--}}
+                        </div>
+                        <div id="tableExpense" style="">
+                            <table class="table" id="tbXp" >
+                                <thead class="text-center">
+                                <tr class="text-secondary">
+                                    <td class="col-4" class="align-middle">Thời gian</td>
+                                    <td class="col-4" class="align-middle">Loại khoản thu</td>
+                                    <td class="col-4" class="align-middle">Số tiền</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($expenses as $expense)
+                                    <tr>
+                                        <td>
+                                            <?php
+                                            $x = Carbon::create($expense->dateTime);
+                                            echo($x->format('d-m-Y'));
+                                            ?>
+                                        </td>
+                                        <td>
+                                            {{$expense->categoryExpense->name}}
+                                        </td>
+                                        <td class="text-end">
+                                            <?php
+                                            echo number_format($expense->amount);
+                                            ?> VND
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            <nav class="d-flex justify-items-center justify-content-between">
+                                <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
+                                    <div>
+                                        <p class="small text-muted">
+                                            Xem
+                                            <span class="fw-semibold">{{$expenses->firstItem()}}</span>
+                                            đến
+                                            <span class="fw-semibold">{{$expenses->lastItem()}}</span>
+                                            của
+                                            <span class="fw-semibold">{{$expenses->total()}}</span>
+                                            bản ghi
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <ul class="pagination" id="pageExpense">
+
+                                            <li class="page-item pageExpense" aria-disabled="true" aria-label="« Previous">
+                                                <a class="page-link" href="{{$expenses->previousPageUrl()}}">‹</a>
+                                            </li>
+                                            @foreach($expenses->getUrlRange(1, $expenses->lastPage()) as $index => $page)
+                                                @if($index == $expenses->currentPage())
+                                                    <li class="page-item active" aria-current="page"><span class="page-link">{{$index}}</span></li>
+                                                    </a>
+                                                @else
+                                                    <li class="page-item pageExpense" id="xp{{$index}}"><a class="page-link" href="{{$page}}">{{$index}}</a></li>
+                                                @endif
+                                            @endforeach
+
+                                            <li class="page-item pageExpense">
+                                                <a class="page-link" href="{{$expenses->nextPageUrl()}}">›</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
 
                 </div>
@@ -387,6 +469,41 @@
         }
     </script>
     <script>
+        $('.pageIncome').on('click',function (e){
+            e.preventDefault();
+            var index = $(this).attr('id');
+            $.ajax({
+                type:'GET',
+                url:'/dashboard?income='+index+'/',
+                cache:false,
+                success:function (){
+                    $('#tbIc').load('dashboard?income='+index+'/ #tbIc');
+                    $('#pageIncome').load('dashboard?income='+index+'/ #pageIncome');
+
+                },
+                error:function (){
+                    alert('khong chay');
+                }
+            })
+        })
+        $('.pageExpense').on('click',function (e){
+            e.preventDefault();
+            var index = $(this).attr('id');
+            index = index.substring(2);
+            $.ajax({
+                type:'GET',
+                url:'/dashboard?expenses='+index+'/',
+                cache:false,
+                success:function (){
+                    $('#tbXp').load('dashboard?expenses='+index+'/ #tbXp');
+                    $('#pageExpense').load('dashboard?expenses='+index+'/ #pageExpense');
+
+                },
+                error:function (){
+                    alert('khong chay');
+                }
+            })
+        })
         $('#editForm').on('submit',function (e){
             e.preventDefault();
             var limit = $('#limitEdit').val();
