@@ -17,7 +17,7 @@ class CategoryIncomeController extends Controller
     public function index()
     {
         $lsCategoryIncome = Models\categoryIncome::all();
-        $laCategoryIncome = CategoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        $laCategoryIncome = categoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
         return view('CategoryIncome.index')->with('lsCategoryIncome',$lsCategoryIncome);
     }
 
