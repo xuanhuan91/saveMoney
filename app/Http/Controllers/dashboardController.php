@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\expense;
 use App\Models\expenseLimit;
 use App\Models\income;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,8 +23,19 @@ class dashboardController extends Controller
     public function index()
     {
         //
+        $monthNow = Carbon::now()->month;
+        $today = Carbon::now();
         $limits = expenseLimit::where('userId','=',Auth::user()->id)->orderBy('startDate','desc')->get();
         $currentLimit=0;
+        $currentLimit = expenseLimit::where('userId','=',Auth::user()->id)
+            ->where('startDate','<=',$today)
+            ->where('endDate','>',$today)
+            ->select('limit')
+            ->get();
+        if($currentLimit == null){
+            $currentLimit=0;
+        }
+
         foreach ($limits as $limit){
             if(today()>$limit->startDate && today()<=$limit->endDate){
                 $currentLimit = $limit->limit;
@@ -31,16 +43,39 @@ class dashboardController extends Controller
         }
         $limits = expenseLimit::where('userId','=',Auth::user()->id)->orderBy('startDate','desc')->Paginate(5);
 
-        $incomes = income::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')
-//            ->Paginate(5)
-        ->get()
-        ;
-        $expenses = expense::where('userId','=',Auth::user()->id)->orderBy('dateTime','desc')
-//            ->Paginate(5)
-        ->get()
+        $sumIncome = income::where('userId','=',Auth::user()->id)
+            ->whereMonth('dateTime',$monthNow)
+            ->sum('amount');
+        $incomes = income::where('userId','=',Auth::user()->id)
+            ->whereMonth('dateTime',$monthNow)
+            ->orderBy('dateTime','desc')
+            ->Paginate(5,['*'],'incomes')
+//        ->get()
         ;
 
-        return view('dashboard.index',compact('currentLimit','limits','incomes','expenses'));
+        $sumExpense = expense::where('userId','=',Auth::user()->id)
+            ->whereMonth('dateTime',$monthNow)
+            ->sum('amount');
+        $expenses = expense::where('userId','=',Auth::user()->id)
+            ->whereMonth('dateTime',$monthNow)
+            ->orderBy('dateTime','desc')
+            ->Paginate(5,['*'],'expenses')
+//        ->get()
+        ;
+
+        if($sumExpense!=null){
+            if($sumExpense > $currentLimit){
+                $warning = 'Chi tiêu đang vượt '.number_format($sumExpense-$currentLimit).' VND';
+            }else{
+                $warning ='';
+            }
+        }else{
+            $warning ='';
+        }
+
+//dd($currentLimit->count());
+
+        return view('dashboard.index',compact('warning','currentLimit','limits','incomes','expenses','sumIncome','sumExpense'));
     }
 
     /**
