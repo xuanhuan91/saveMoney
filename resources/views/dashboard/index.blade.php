@@ -115,7 +115,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{$incomes->links()}}
+{{--                        {{$incomes->links()}}--}}
                         <table class="table" id="tableExpense" style="">
                             <thead>
                             <tr class="text-secondary">
@@ -142,7 +142,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{$expenses->links()}}
+{{--                        {{$expenses->links()}}--}}
 
                     </div>
 
