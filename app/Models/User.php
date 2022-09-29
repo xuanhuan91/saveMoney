@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function income()
+    {
+        return $this->hasMany('App\Models\income', 'userId');
+    }
 }
