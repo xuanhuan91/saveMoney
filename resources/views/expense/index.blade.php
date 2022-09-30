@@ -235,7 +235,7 @@
         <form method="post" action="#" id="editForm">
             @csrf
             @method('PUT')
-            <input type="number" id="idIncomeEdit">
+            <input type="number" id="idExpenseEdit">
             <div class="form-group">
                 <label>Thời gian</label>
                 <input class="form-control" id="dateEdit" type="date" name="dateTime" value="{{old('dateTime')}}"/>
