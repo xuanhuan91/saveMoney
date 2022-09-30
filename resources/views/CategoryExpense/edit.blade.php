@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('modalBody')
     <div class="container">
         @if(count($errors) >0)
@@ -16,7 +15,7 @@
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctexpense->name) }}" placeholder="Enter name"/>
             </div>
             <div class="form-group">
-                <label for="subCategoryiD">Thành Phần loại Khoản Chi </label>
+                <label for="subCategoryiD">Thành Phần loại Khoản Chi</label>
                 <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD"{{old('subCategoryiD',$ctexpense->subCategoryiD) }}/>
             </div>
             <div>
@@ -45,4 +44,3 @@
 @endsection
 @section('content')
 @endsection
-

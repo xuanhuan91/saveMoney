@@ -1,7 +1,10 @@
 @extends('layouts.app')
+@section('scriptSrc')
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+@endsection
 @section('content')
     <div class="container" style="margin-top: 40px">
-        <h2>Quản lý Khoản Chi </h2>
+        <h2>Quản lý Loại Khoản Chi</h2>
         <div>
             <a>
                 <button class="btn btn-primary btn-block " style="width: 10%; float: right"
@@ -39,8 +42,8 @@
                     <td>{{$parentExpense->subCategoryiD}}</td>
                     <td>{{$parentExpense->created_at}}</td>
                     <td class="text-lg-center" style="width: 20%">
-                        <a data-target="#editModal" data-toggle="modal" onclick="getExpense({{$parentExpense}})"
-                           class="btn btn-warning"   href='#'
+                        <a data-target="#editModal" data-toggle="modal" onclick="getCategoryExpense({{$parentExpense}})"
+                           class="btn btn-primary"   href='#'
                         >Edit</a>
                     </td>
                     <span style="margin-left: 20px"></span>
@@ -124,7 +127,7 @@
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$parentExpense->name) }}" placeholder="Enter name"/>
             </div>
             <div class="form-group">
-                <label for="subCategoryiD">Thành Phần loại Khoản Chi </label>
+                <label for="subCategoryiD">Thành Phần loại Khoản Chi</label>
                 <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD"{{old('subCategoryiD',$parentExpense->subCategoryiD) }}/>
             </div>
             <div>
@@ -157,6 +160,3 @@
         }
     </script>
 @endsection
-
-
-

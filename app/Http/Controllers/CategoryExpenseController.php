@@ -15,9 +15,9 @@ class CategoryExpenseController extends Controller
      */
     public function index()
     {
-        $lsCategoryExpense = \App\Models\categoryExpense::all();
-        $laCategoryExpense = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
-        return view('categoryExpense.index')->with('lsCategoryExpense',$lsCategoryExpense);
+        $lsCategoryExpense = \App\Models\categoryExpense::all()->where('userId','=',Auth::User()->id);
+        //$laCategoryExpense = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        return view('CategoryExpense.index')->with('lsCategoryExpense',$lsCategoryExpense);
     }
 
     /**
@@ -49,6 +49,7 @@ class CategoryExpenseController extends Controller
         $ctexpense = new \App\Models\CategoryExpense();
         $ctexpense->name = $name;
         $ctexpense->subCategoryiD = $subCategoryiD;
+        $ctexpense->userId = Auth::user()->id;
         $ctexpense->save();
 
         $request->session()->flash('success', 'New Expense category created successfully');
@@ -99,6 +100,7 @@ class CategoryExpenseController extends Controller
         $ctexpense->name = $name;
         $ctexpense->subCategoryiD = $subCategoryiD;
         $ctexpense->save();
+        $result = 'Sua thanh cong';
 
         $request->session()->flash('success', 'Category Expense updated sucessfully.');
         return redirect(route('CategoryExpense.index'));

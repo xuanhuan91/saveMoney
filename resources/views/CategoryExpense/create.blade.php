@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('modalBody')
     <div class="container">
         @if(count($errors) >0)
