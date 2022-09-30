@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models;
 use Illuminate\Support\Facades\Auth;
 
+
 class CategoryIncomeController extends Controller
 {
     /**
@@ -14,11 +15,11 @@ class CategoryIncomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id);
-        $laCategoryIncome = categoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id)
+         ->whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
         return view('CategoryIncome.index')->with('lsCategoryIncome',$lsCategoryIncome);
     }
 
@@ -55,7 +56,6 @@ class CategoryIncomeController extends Controller
         $ctincome->save();
 
         $request->session()->flash('success', 'New Income category created successfully');
-
         return redirect(route('CategoryIncome.index'));
     }
 
@@ -76,9 +76,10 @@ class CategoryIncomeController extends Controller
      * @param  \App\Models\categoryIncome  $categoryIncome
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
         $ctincome = Models\CategoryIncome::find($id);
+        $request->session()->flash('success', 'Update successfully');
         return view('CategoryIncome.edit')->with('ctincome', $ctincome);
     }
 
@@ -103,6 +104,7 @@ class CategoryIncomeController extends Controller
         $ctincome->subCategoryiD=$subCategoryiD;
         $ctincome->save();
         $result ='sua thanh cong';
+        return $result;
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');
         return redirect(route('CategoryIncome.index'));

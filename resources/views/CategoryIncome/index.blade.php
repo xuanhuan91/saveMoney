@@ -42,7 +42,7 @@
                     <td>{{$parentIncome->subCategoryiD}}</td>
                     <td>{{$parentIncome->created_at}}</td>
                     <td class="text-lg-center" style="width: 20%">
-                    <a data-target="#editModal" data-toggle="modal" onclick="getCategoryIncome({{$parentIncome}})"
+                    <a data-target="#editModal" data-toggle="modal" onclick="getIncome({{$parentIncome}})"
                                class="btn btn-primary"   href='#'
                         >Edit</a>
                     </td>
@@ -119,8 +119,11 @@
             </div>
         @endif
         <form method="post" action="#" id="editForm">
-            @csrf
-            @method('PUT')
+            <form action="{{route('CategoryIncome.update')}}" method="post" enctype="multipart/form-data">
+                {{csrf_field()}}
+                {{method_field('put')}}
+                @csrf
+            @method('put')
             <input type="number" id="idIncomeEdit">
             <div class="form-group">
                 <label for="name">Tên Loại Khoản Thu</label>
@@ -150,7 +153,7 @@
                                         --bs-btn-disabled-border-color: #0a58ca;"
                 >Hủy</a>
             </div>
-
+            </form>
         </form>
     </div>
     <script  type="text/javascript">

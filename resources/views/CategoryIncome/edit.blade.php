@@ -10,6 +10,7 @@
         @endif
         <form method="post" action="{{route('CategoryIncome.store')}}">
             @csrf
+
             <div class="form-group">--}}
                 <label for="name">Tên Loại Khoản Thu</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name"/>
