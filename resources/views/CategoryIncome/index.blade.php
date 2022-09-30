@@ -1,8 +1,10 @@
 @extends('layouts.app')
-
+@section('scriptSrc')
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+@endsection
 @section('content')
     <div class="container" style="margin-top: 40px">
-        <h2>Quản lý Khoản Thu </h2>
+        <h2>Quản lý Loại Khoản Thu </h2>
         <div>
             <a>
                <button class="btn btn-primary btn-block " style="width: 10%; float: right"
@@ -40,8 +42,8 @@
                     <td>{{$parentIncome->subCategoryiD}}</td>
                     <td>{{$parentIncome->created_at}}</td>
                     <td class="text-lg-center" style="width: 20%">
-                    <a data-target="#editModal" data-toggle="modal" onclick="getExpense({{$parentIncome}})"
-                               class="btn btn-warning"   href='#'
+                    <a data-target="#editModal" data-toggle="modal" onclick="getCategoryIncome({{$parentIncome}})"
+                               class="btn btn-primary"   href='#'
                         >Edit</a>
                     </td>
                             <span style="margin-left: 20px"></span>

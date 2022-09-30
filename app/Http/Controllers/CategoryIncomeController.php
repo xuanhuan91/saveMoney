@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\categoryIncome;
 use Illuminate\Http\Request;
 use App\Models;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryIncomeController extends Controller
 {
@@ -16,7 +16,8 @@ class CategoryIncomeController extends Controller
      */
     public function index()
     {
-        $lsCategoryIncome = Models\categoryIncome::all();
+
+        $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id);
         $laCategoryIncome = categoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
         return view('CategoryIncome.index')->with('lsCategoryIncome',$lsCategoryIncome);
     }
@@ -29,6 +30,7 @@ class CategoryIncomeController extends Controller
     public function create()
     {
         return view('CategoryIncome.create');
+
     }
 
     /**
@@ -49,6 +51,7 @@ class CategoryIncomeController extends Controller
         $ctincome = new Models\CategoryIncome();
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
+        $ctincome->userId = Auth::user()->id;
         $ctincome->save();
 
         $request->session()->flash('success', 'New Income category created successfully');
@@ -99,7 +102,7 @@ class CategoryIncomeController extends Controller
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
         $ctincome->save();
-
+        $result ='sua thanh cong';
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');
         return redirect(route('CategoryIncome.index'));
