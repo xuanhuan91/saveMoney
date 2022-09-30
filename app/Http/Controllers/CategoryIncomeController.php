@@ -18,9 +18,9 @@ class CategoryIncomeController extends Controller
     public function index(Request $request)
     {
 
-        $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id)
-         ->whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
-        return view('CategoryIncome.index')->with('lsCategoryIncome',$lsCategoryIncome);
+        $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id);
+        $lscategory= categoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        return view('CategoryIncome.index')->with(['lsCategoryIncome'=>$lsCategoryIncome,'']);
     }
 
     /**
@@ -99,7 +99,7 @@ class CategoryIncomeController extends Controller
         $subCategoryiD = $request->input('subCategoryiD');
         $name = $request->input('name');
 
-        $ctincome = Models\CategoryIncome::find($id);
+        $ctincome = categoryIncome::find($id);
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
         $ctincome->save();

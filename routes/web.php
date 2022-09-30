@@ -28,7 +28,7 @@ Route::get('/home', [App\Http\Controllers\dashboardController::class, 'index']);
 Route::resource('user', \App\Http\Controllers\userController::class);
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 Route::resource("CategoryIncome",App\Http\Controllers\categoryIncomeController::class);
-route::put('','productcontroller@update')->name('CategoryIncome.update');
+route::put('','categoryIncomecontroller@update')->name('CategoryIncome.update');
 Route::resource("expense", App\Http\Controllers\ExpenseController::class);
 Route::resource("dashboard", App\Http\Controllers\dashboardController::class);
 Route::resource("expenseLimit", App\Http\Controllers\ExpenseLimitController::class);
