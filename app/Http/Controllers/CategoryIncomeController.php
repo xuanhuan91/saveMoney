@@ -20,7 +20,7 @@ class CategoryIncomeController extends Controller
 
         $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id);
         $lscategory= categoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
-        return view('CategoryIncome.index')->with(['lsCategoryIncome'=>$lsCategoryIncome,'']);
+        return view('CategoryIncome.index')->with(['lsCategoryIncome'=>$lsCategoryIncome,'lscategory'=>$lscategory]);
     }
 
     /**
@@ -80,7 +80,7 @@ class CategoryIncomeController extends Controller
     {
         $ctincome = Models\CategoryIncome::find($id);
         $request->session()->flash('success', 'Update successfully');
-        return view('CategoryIncome.edit')->with('ctincome', $ctincome);
+        return view('CategoryIncome.edit', compact('ctincome'))->with('ctincome', $ctincome);
     }
 
     /**
@@ -103,8 +103,6 @@ class CategoryIncomeController extends Controller
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
         $ctincome->save();
-        $result ='sua thanh cong';
-        return $result;
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');
         return redirect(route('CategoryIncome.index'));
@@ -126,5 +124,9 @@ class CategoryIncomeController extends Controller
             $request->session()->flash('success', 'Category Income deleted successfully.');
         }
         return redirect(route('CategoryIncome.index'));
+    }
+
+    public function getIncomeTest($id) {
+        return Models\categoryIncome::where('id', $id)->get();
     }
 }

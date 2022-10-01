@@ -8,16 +8,15 @@
                 @endforeach
             </div>
         @endif
-        <form action="{{ route('CategoryIncome.store') }}" method="POST">
+        <form action="{{ route('CategoryIncome.update', ['id'=>$ctincome->id]) }}"  method="POST">
                 @csrf
-            @method('put')
-            <div class="form-group">--}}
+            <div class="form-group">
                 <label for="name">Tên Loại Khoản Thu</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name"/>
             </div>
             <div class="form-group">
                 <label for="subCategoryiD">Thành Phần loại Khoản Thu </label>
-                <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD"{{old('subCategoryiD',$ctincome->subCategoryiD) }}/>
+                <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD" value="{{old('subCategoryiD',$ctincome->subCategoryiD) }}" />
             </div>
             <div>
                 <input style="margin-right: 15px" type="submit" class="btn btn-primary " value="Save">
