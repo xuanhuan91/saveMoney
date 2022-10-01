@@ -119,11 +119,8 @@
             </div>
         @endif
         <form method="post" action="#" id="editForm">
-            <form action="{{route('CategoryIncome.update')}}" method="post" enctype="multipart/form-data">
-                {{csrf_field()}}
-                {{method_field('put')}}
-                @csrf
-            @method('put')
+            @csrf
+            @method('get')
             <input type="number" id="idIncomeEdit">
             <div class="form-group">
                 <label for="name">Tên Loại Khoản Thu</label>

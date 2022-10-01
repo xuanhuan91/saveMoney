@@ -8,9 +8,9 @@
                 @endforeach
             </div>
         @endif
-        <form action="{{ route('CategoryIncome.update',$ctincome) }}" method="POST">
+        <form action="{{ route('CategoryIncome.store') }}" method="POST">
                 @csrf
-                @method('PUT')
+            @method('put')
             <div class="form-group">--}}
                 <label for="name">Tên Loại Khoản Thu</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name',$ctincome->name) }}" placeholder="Enter name"/>
