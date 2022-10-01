@@ -46,4 +46,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\income', 'userId');
     }
+    public function expense()
+    {
+        return $this->hasMany('App\Models\expense', 'userId');
+    }
 }

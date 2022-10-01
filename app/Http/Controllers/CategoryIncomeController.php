@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\categoryIncome;
 use Illuminate\Http\Request;
 use App\Models;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoryIncomeController extends Controller
 {
@@ -14,10 +15,12 @@ class CategoryIncomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lsCategoryIncome = Models\categoryIncome::all();
-        return view('CategoryIncome.index')->with('lsCategoryIncome',$lsCategoryIncome);
+
+        $lsCategoryIncome = Models\categoryIncome::all()->where('userId','=',Auth::User()->id);
+        $lscategory= categoryIncome::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        return view('CategoryIncome.index')->with(['lsCategoryIncome'=>$lsCategoryIncome,'lscategory'=>$lscategory]);
     }
 
     /**
@@ -28,6 +31,7 @@ class CategoryIncomeController extends Controller
     public function create()
     {
         return view('CategoryIncome.create');
+
     }
 
     /**
@@ -48,10 +52,10 @@ class CategoryIncomeController extends Controller
         $ctincome = new Models\CategoryIncome();
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
+        $ctincome->userId = Auth::user()->id;
         $ctincome->save();
 
         $request->session()->flash('success', 'New Income category created successfully');
-
         return redirect(route('CategoryIncome.index'));
     }
 
@@ -72,10 +76,11 @@ class CategoryIncomeController extends Controller
      * @param  \App\Models\categoryIncome  $categoryIncome
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
         $ctincome = Models\CategoryIncome::find($id);
-        return view('CategoryIncome.edit')->with('ctincome', $ctincome);
+        $request->session()->flash('success', 'Update successfully');
+        return view('CategoryIncome.edit', compact('ctincome'))->with('ctincome', $ctincome);
     }
 
     /**
@@ -94,11 +99,10 @@ class CategoryIncomeController extends Controller
         $subCategoryiD = $request->input('subCategoryiD');
         $name = $request->input('name');
 
-        $ctincome = Models\CategoryIncome::find($id);
+        $ctincome = categoryIncome::find($id);
         $ctincome->name =$name;
         $ctincome->subCategoryiD=$subCategoryiD;
         $ctincome->save();
-
 
         $request->session()->flash('success', 'Category Income updated sucessfully.');
         return redirect(route('CategoryIncome.index'));
@@ -120,5 +124,9 @@ class CategoryIncomeController extends Controller
             $request->session()->flash('success', 'Category Income deleted successfully.');
         }
         return redirect(route('CategoryIncome.index'));
+    }
+
+    public function getIncomeTest($id) {
+        return Models\categoryIncome::where('id', $id)->get();
     }
 }

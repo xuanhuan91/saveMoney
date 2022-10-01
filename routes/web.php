@@ -28,7 +28,8 @@ Route::get('/home', [App\Http\Controllers\dashboardController::class, 'index']);
 Route::resource('user', \App\Http\Controllers\userController::class);
 Route::resource("CategoryExpense", App\Http\Controllers\categoryExpenseController::class);
 Route::resource("CategoryIncome",App\Http\Controllers\categoryIncomeController::class);
-Route::resource("expense", App\Http\Controllers\ExpenseController::class);
+Route::put('CategoryIncome/{id}','categoryIncomecontroller@update')->name('CategoryIncome.update');
+Route::get('getIncome/{id}', [\App\Http\Controllers\CategoryIncomeController::class, 'getIncomeTest']);
 Route::resource("income", \App\Http\Controllers\IncomeController::class);
 Route::put('CategoryExpense/{id}','categoryExpensecontroller@update')->name('CategoryExpense.update');
 Route::get('getExpense/{id}', [\App\Http\Controllers\CategoryExpenseController::class, 'getExpenseTest']);
@@ -37,9 +38,8 @@ Route::resource("dashboard", App\Http\Controllers\dashboardController::class);
 Route::resource("expenseLimit", App\Http\Controllers\ExpenseLimitController::class);
 Route::get('checkStartDate',[App\Http\Controllers\ExpenseLimitController::class,'checkStartDate'])->name('checkStartDate');
 
+Route::post('search',[App\Http\Controllers\IncomeController::class,'search'])->name('search');
+Route::post('search1',[App\Http\Controllers\ExpenseController::class,'search'])->name('search1');
 
-
-Route::resource("expense", \App\Http\Controllers\ExpenseController::class);
-Route::post('search',[App\Http\Controllers\ExpenseController::class,'search'])->name('search');
 
 

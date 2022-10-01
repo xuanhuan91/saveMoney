@@ -1,12 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models;
-use App\Models\Expense;
+use App\Models\categoryExpense;
+use App\Models\expense;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
+    protected categoryExpense $categoryexpense;
+    public function __construct(categoryExpense $categoryexpense)
+    {
+        $this->categoryexpense = $categoryexpense;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +23,18 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $lsExpense = Models\Expense::all();
-        return view('expense.index')->with('lsExpense', $lsExpense);
+//        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+//        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)
+            ->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_expenses')->where('userId','=',Auth::User()->id)
+            ->whereNotNull('subCategoryiD')->get();
+//        $lsexpense = Expense::all();
+        $lsexpense = expense::whereNotNull('CategoryExpenseiD')->orderBy('created_at','desc')->Paginate(3);
+        return view('expense.index')->with(['lsexpense' => $lsexpense, 'lscategoryexpense' => $lscategoryexpense,'subcategory'=>$subcategory]);
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +43,12 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('expense.create');
+        $lscategoryexpense = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_expenses')->where('userId','=',Auth::User()->id)->whereNull('subCategoryiD')->get();
+//        $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
+//        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+        return view('expense.create', compact('lscategoryexpense', 'subcategory'));
+//
     }
 
     /**
@@ -36,29 +59,25 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
-            [
-                'amount' => 'required|min:1|max:50'
-            ]);
+        $categoryid = $request->expense_category_id;
+        if($categoryid==null){
+            $categoryid = $request->expense_category;
+        }
         $dateTime = $request->dateTime;
-        $categoryExpenseId = $request->categoryExpenseId;
         $amount = $request->amount;
-//        $type = $request->type;
-//        $components = $request->components;
         $note = $request->input('note');
 
+        $cate = new expense();
+        $cate->userId = Auth::user()->id;
+        $cate->dateTime = $dateTime;
+        $cate->amount = $amount;
+        $cate->note = $note;
+        $cate->categoryExpenseId = $categoryid;
+        $cate->save();
 
-        $expense = new Expense();
-        $expense->amount = $amount;
-        $expense->categoryExpenseId = $categoryExpenseId;
-//        $expense->type = $type;
-//        $expense->components = $components;
-        $expense->note = $note;
-        $expense->dateTime = $dateTime;
-        $expense->save();
-
-        $request->session()->flash('success', 'Expense created sucessfully.');
+        $request->session()->flash('success', 'Expense created sucessfully');
         return redirect(route('expense.index'));
+
     }
 
     /**
@@ -75,13 +94,21 @@ class ExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Expense  $expense
+     * @param $id
+     * @param $request
      * @return \Illuminate\Http\Response
      */
-    public function edit( $id)
+    public function edit(Request $request, $id)
     {
-        $expense = Models\Expense::find($id);
-        return view('expense.edit')->with('expense', $expense);
+        $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
+
+        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+
+
+        $cate = expense::find($id);
+        $request->session()->flash('success', 'Update sucessfully');
+        return view('expense.edit')->with(['cate' => $cate, 'lscategoryexpense' => $lscategoryexpense, 'subcategory' => $subcategory]);
+//
     }
 
     /**
@@ -93,23 +120,23 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,
-            [
-                'amount' => 'required|min:1|max:50'
-            ]);
-
-        $amount = $request->amount;
-//        $type = $request->type;
+        $result ='';
+        $categoryid = $request->input('cateExpense');
+        $dateTime = $request->input('date');
+        $amount = $request->input('amount');
         $note = $request->input('note');
 
-        $expense = Models\Expense::find($id);
-        $expense->amount = $amount;
-//        $expense->type = $type;
-        $expense->note = $note;
-        $expense->save();
+        $cate = expense:: find($id);
+        $cate->dateTime = $dateTime;
+        $cate->amount = $amount;
+        $cate->note = $note;
+        $cate->categoryExpenseId = $categoryid;
+        $cate->save();
+        $result ='Edit Succesfull';
+        return $result;
 
-        $request->session()->flash('success', 'Expense update sucessfully.');
-        return redirect(route('expense.index'));
+//        $request->session()->flash('success', 'Expense update sucessfully');
+//        return redirect(route('expense.index'));
     }
 
     /**
@@ -118,16 +145,53 @@ class ExpenseController extends Controller
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy(Request $request, $id)
     {
-        $expense = Models\Expense::find($id);
-        if($expense == null) {
-            $request->session()->flash('danger', 'Expense not found.');
-        } else {
-            $expense->delete();
-            $request->session()->flash('success', 'Expense deleted sucessfully.');
-        }
+        $cate = expense::find($id);
+        $cate->delete();
+        $request->session()->flash('success', 'Delete sucessfully');
         return redirect(route('expense.index'));
+    }
+
+
+    public function search(Request $request)
+    {
+        $title = $request->input('title');
+        $dateTime = $request->input('dateTime');
+        $lscategoryexpense = DB::table('category_expenses')->whereNull('subCategoryiD')->get();
+        $subcategory = DB::table('category_expenses')->whereNotNull('subCategoryiD')->get();
+
+        if (is_null($title) && (is_null($dateTime))) {
+            $lsexpense = expense::query()->get();
+            return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory'));
+        } else {
+            if (!is_null($title) && (is_null($dateTime))) {
+                $lsexpense = expense::query()->whereHas('categoryexpense', function ($query) use ($title) {
+                    return $query
+                        ->join('category_expenses as parent_categoryexpense', 'parent_categoryexpense.id', '=', 'category_expenses.subCategoryiD')
+                        ->where('parent_categoryexpense.name', '=', $title);
+                });
+
+                $lsexpense = $lsexpense->get();
+                return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory', 'title'));
+            }if (is_null($title) && (!is_null($dateTime))) {
+                $lsexpense = expense::query()->whereHas('categoryexpense', function ($query) use ($dateTime) {
+                    return $query
+                        ->join('category_expenses as parent_categoryexpense', 'parent_categoryexpense.id', '=', 'category_expenses.subCategoryiD')
+                        ->where('parent_categoryexpense.dateTime', '=', $dateTime);
+                });
+                $lsexpense = $lsexpense->get();
+                return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory', 'title'));
+
+
+            } else {
+                $lsexpense = expense::query()->whereHas('dateTime', $dateTime)
+                    ->where('title', $title);
+                return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
+            }
+
+        }
+
     }
 
 }

@@ -12,6 +12,7 @@
         @endif
         <form method="post" action="{{route('income.store')}}">
             @csrf
+
             <div class="form-group">
                 <label>Thời gian</label>
                 <input class="form-control" type="date" name="dateTime" value="{{old('dateTime')}}"/>
