@@ -19,7 +19,7 @@ class categoryExpense extends Model
         return $this->hasMany(categoryExpense::class, 'subCategoryiD');
     }
 
-    public function expenses()
+    public function expense()
     {
         return $this->hasMany(expense::class, 'categoryExpenseId');
 

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\categoryExpense;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Models;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryExpenseController extends Controller
 {
@@ -13,10 +14,13 @@ class CategoryExpenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $parentCategoryExpense = \App\Models\categoryExpense::where('subCategoryiD', 0)->get();
-        return view('categoryExpense.index', compact('parentCategoryExpense'));
+        $lsCategoryExpense = \App\Models\categoryExpense::all()->where('userId','=', Auth::user()->id);
+        //$laCategoryExpense = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+//        return view('CategoryExpense.index')->with('lsCategoryExpense',$lsCategoryExpense);
+        $lscategory = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        return view('CategoryExpense.index')->with(['lsCategoryExpense'=>$lsCategoryExpense, 'lscategory'=>$lscategory]);
     }
 
     /**
@@ -42,15 +46,18 @@ class CategoryExpenseController extends Controller
             [
                 'name' => 'required|min:5|max:500'
             ]);
+        $subCategoryiD = $request->input('subCategoryiD');
         $name = $request->input('name');
 
-        $cate = new Models\categoryExpense();
-        $cate->name =$name;
-        $cate->save();
+        $ctexpense = new \App\Models\CategoryExpense();
+        $ctexpense->name = $name;
+        $ctexpense->subCategoryiD = $subCategoryiD;
+        $ctexpense->userId = Auth::user()->id;
+        $ctexpense->save();
 
         $request->session()->flash('success', 'New Expense category created successfully');
 
-        return redirect(route('category.index'));
+        return redirect(route('CategoryExpense.index'));
     }
 
     /**
@@ -70,10 +77,14 @@ class CategoryExpenseController extends Controller
      * @param  \App\Models\categoryExpense  $categoryExpense
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
-        $parentCategory = \App\Models\categoryExpense::find($id);
-        return view('categoryExpense.edit')->with('cate', $parentCategory);
+//        $ctexpense = \App\Models\CategoryExpense::find($id);
+//        return view('CategoryExpense.edit')->with('ctexpense', $ctexpense);
+
+        $ctexpense = \App\Models\CategoryExpense::find($id);
+        $request->session()->flash('success', 'Update successfully');
+        return view('CategoryExpense.edit', compact('ctexpense'))->with('ctexpense', $ctexpense);
     }
 
     /**
@@ -89,14 +100,17 @@ class CategoryExpenseController extends Controller
             [
                 'name' => 'required|min:5|max:500'
             ]);
-        $name = $request->name;
+        $subCategoryiD = $request->input('subCategoryiD');
+        $name = $request->input('name');
 
-        $parentCategory = \App\Models\categoryExpense::find($id);
-        $parentCategory->name = $name;
-        $parentCategory->save();
+        $ctexpense = \App\Models\CategoryExpense::find($id);
+        $ctexpense->name = $name;
+        $ctexpense->subCategoryiD = $subCategoryiD;
+        $ctexpense->save();
+//        $result = 'Sua thanh cong';
 
         $request->session()->flash('success', 'Category Expense updated sucessfully.');
-        return redirect(route('categoryExpense.index'));
+        return redirect(route('CategoryExpense.index'));
     }
 
     /**
@@ -107,13 +121,17 @@ class CategoryExpenseController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $parentCategory = \App\Models\categoryExpense::find($id);
-        if($parentCategory == null) {
+        $ctexpense = \App\Models\CategoryExpense::find($id);
+        if($ctexpense == null) {
             $request->session()->flash('danger', 'Category Expense not found.');
         } else {
-            $parentCategory->delete();
+            $ctexpense->delete();
             $request->session()->flash('success', 'Category Expense deleted sucessfully.');
         }
-        return redirect(route('categoryExpense.index'));
+        return redirect(route('CategoryExpense.index'));
+    }
+
+    public function getExpenseTest($id) {
+        return \App\Models\categoryExpense::where('id', $id)->get();
     }
 }
