@@ -14,7 +14,7 @@
             </tr>
         </table>
 
-        <form action="{{route('search')}}" method="POST" >
+        <form action="{{route('search1')}}" method="POST" >
             {{csrf_field()}}
             <div class="input-group">
                 <input type="text" class="form-control"name="title" placeholder="Type Of Expense">

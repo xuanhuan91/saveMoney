@@ -174,11 +174,18 @@ class ExpenseController extends Controller
 
                 $lsexpense = $lsexpense->get();
                 return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory', 'title'));
-//            } elseif (is_null($title) && (!is_null($dateTime))) {
-//                $lsexpense = Expense::all()->where('dateTime', $dateTime);
-//                return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
+            }if (is_null($title) && (!is_null($dateTime))) {
+                $lsexpense = expense::query()->whereHas('categoryexpense', function ($query) use ($dateTime) {
+                    return $query
+                        ->join('category_expenses as parent_categoryexpense', 'parent_categoryexpense.id', '=', 'category_expenses.subCategoryiD')
+                        ->where('parent_categoryexpense.dateTime', '=', $dateTime);
+                });
+                $lsexpense = $lsexpense->get();
+                return view('expense.index', compact('lsexpense', 'lscategoryexpense', 'subcategory', 'title'));
+
+
             } else {
-                $lsexpense = expense::all()->where('dateTime', $dateTime)
+                $lsexpense = expense::query()->whereHas('dateTime', $dateTime)
                     ->where('title', $title);
                 return view('expense.index', compact('lsexpense', 'subcategory', 'subcategory'));
             }
