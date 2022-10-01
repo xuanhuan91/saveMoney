@@ -45,7 +45,9 @@
                             </div>
                             <div class="row">
                                 <h4 class="fw-bolder"><?php
-                                    if($currentLimit->count() != 0){
+//                                    if($currentLimit->count() != 0){
+                                    if($currentLimit!= 0){
+
                                         echo number_format($currentLimit);
                                     }
                                     ?> VND</h4>
