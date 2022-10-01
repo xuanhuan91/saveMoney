@@ -13,7 +13,7 @@
                 </button>
             </a>
         </div>
-        <br>
+        <br><br>
         <div class="flash-message">
 
             @foreach(['danger', 'success', 'warning', 'info'] as $type)
@@ -42,8 +42,8 @@
                     <td>{{$parentExpense->subCategoryiD}}</td>
                     <td>{{$parentExpense->created_at}}</td>
                     <td class="text-lg-center" style="width: 20%">
-                        <a data-target="#editModal" data-toggle="modal" onclick="getCategoryExpense({{$parentExpense}})"
-                           class="btn btn-primary"   href='#'
+                        <a data-target="#editModal" data-toggle="modal" onclick="getExpense({{$parentExpense->id}})"
+                           class="btn btn-primary"
                         >Edit</a>
                     </td>
                     <span style="margin-left: 20px"></span>
@@ -83,7 +83,7 @@
                 <input type="text" class="form-control" id="name" name="name" value="{{old('name') }}" placeholder="Enter name"/>
             </div>
             <div class="form-group">
-                <label for="subCategoryiD">Thành Phần loại Khoản Chi </label>
+                <label for="subCategoryiD">Thành Phần loại Khoản Chi</label>
                 <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD"{{old('subCategoryiD') }}/>
             </div>
             <div>
@@ -118,9 +118,9 @@
                 @endforeach
             </div>
         @endif
-        <form method="post" action="#" id="editForm">
+        <form method="post" action="{{ route('CategoryExpense.update', ['id'=>$parentExpense->id]) }}" id="editForm">
             @csrf
-            @method('PUT')
+            @method('put')
             <input type="number" id="idExpenseEdit">
             <div class="form-group">
                 <label for="name">Tên Loại Khoản Chi</label>
@@ -128,30 +128,34 @@
             </div>
             <div class="form-group">
                 <label for="subCategoryiD">Thành Phần loại Khoản Chi</label>
-                <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD"{{old('subCategoryiD',$parentExpense->subCategoryiD) }}/>
+                <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD" value="{{old('subCategoryiD',$parentExpense->subCategoryiD) }}"/>
             </div>
             <div>
                 <input style="margin-right: 15px" type="submit" class="btn btn-primary " value="Save">
                 <a
-                    class="btn btn-info"   href='{{route("CategoryExpense.index")}}'
+                    class="btn btn-info"   href='route("CategoryExpense.index")'
                     style=" --bs-btn-color: #fff;
-                                        --bs-btn-bg: #0d6efd;
-                                        --bs-btn-border-color: #0a58ca;
-                                        --bs-btn-hover-color: #fff;
-                                        --bs-btn-hover-bg: red;
-                                        --bs-btn-hover-border-color: red;
-                                        --bs-btn-focus-shadow-rgb: 11, 172, 204;
-                                        --bs-btn-active-color: #fff;
-                                        --bs-btn-active-bg: #0a58ca;
-                                        --bs-btn-active-border-color: #0a58ca;
-                                        --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-                                        --bs-btn-disabled-color: #fff;
-                                        --bs-btn-disabled-bg: #0a58ca;
-                                        --bs-btn-disabled-border-color: #0a58ca;"
+                                                    --bs-btn-bg: #0d6efd;
+                                                    --bs-btn-border-color: #0a58ca;
+                                                    --bs-btn-hover-color: #fff;
+                                                    --bs-btn-hover-bg: red;
+                                                    --bs-btn-hover-border-color: red;
+                                                    --bs-btn-focus-shadow-rgb: 11, 172, 204;
+                                                    --bs-btn-active-color: #fff;
+                                                    --bs-btn-active-bg: #0a58ca;
+                                                    --bs-btn-active-border-color: #0a58ca;
+                                                    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                                                    --bs-btn-disabled-color: #fff;
+                                                    --bs-btn-disabled-bg: #0a58ca;
+                                                    --bs-btn-disabled-border-color: #0a58ca;"
                 >Hủy</a>
             </div>
-
         </form>
+        </form>
+        {{--        <div id="testIncome">--}}
+
+        {{--        </div>--}}
+
     </div>
     <script  type="text/javascript">
         function getID(){
@@ -160,3 +164,57 @@
         }
     </script>
 @endsection
+<script>
+    function getExpense(id) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: `/getExpense/${id}`,
+            method: 'GET',
+            success: (e) => {
+                const html = e.map(data => {
+                    return `
+                    <form method="post" action=" route('CategoryExpense.update', ['id'=>${data.id}])" id="editForm">
+                        <input type="number" id="idExpenseEdit">
+                        <div class="form-group">
+                            <label for="name">Tên Loại Khoản Chi</label>
+                            <input type="text" class="form-control" id="name" name="name" value="${data.id}" placeholder="Enter name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="subCategoryiD">Thành Phần loại Khoản Chi</label>
+                            <input type="text" class="form-control" id="subCategoryiD" name="subCategoryiD" value="${data.subCategoryiD}"/>
+                        </div>
+                        <div>
+                            <input style="margin-right: 15px" type="submit" class="btn btn-primary " value="Save">
+                            <a
+                                class="btn btn-info"   href='route("CategoryExpense.index")'
+                                style=" --bs-btn-color: #fff;
+                                                    --bs-btn-bg: #0d6efd;
+                                                    --bs-btn-border-color: #0a58ca;
+                                                    --bs-btn-hover-color: #fff;
+                                                    --bs-btn-hover-bg: red;
+                                                    --bs-btn-hover-border-color: red;
+                                                    --bs-btn-focus-shadow-rgb: 11, 172, 204;
+                                                    --bs-btn-active-color: #fff;
+                                                    --bs-btn-active-bg: #0a58ca;
+                                                    --bs-btn-active-border-color: #0a58ca;
+                                                    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                                                    --bs-btn-disabled-color: #fff;
+                                                    --bs-btn-disabled-bg: #0a58ca;
+                                                    --bs-btn-disabled-border-color: #0a58ca;"
+                            >Hủy</a>
+                        </div>
+                        </form>
+                    </form>
+                    `
+                    console.log()
+                    document.getElementById("testExpense").innerHTML = html
+                })
+                // e là dữ liệu có id = id
+            }
+        })
+    }
+</script>

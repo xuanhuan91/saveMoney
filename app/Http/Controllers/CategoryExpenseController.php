@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\categoryExpense;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Models;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryExpenseController extends Controller
 {
@@ -13,11 +14,13 @@ class CategoryExpenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lsCategoryExpense = \App\Models\categoryExpense::all()->where('userId','=',Auth::User()->id);
+        $lsCategoryExpense = \App\Models\categoryExpense::all()->where('userId','=', Auth::user()->id);
         //$laCategoryExpense = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
-        return view('CategoryExpense.index')->with('lsCategoryExpense',$lsCategoryExpense);
+//        return view('CategoryExpense.index')->with('lsCategoryExpense',$lsCategoryExpense);
+        $lscategory = categoryExpense::whereNotNull('subCategoryiD')->orderBy('created_at','desc')->Paginate(5);
+        return view('CategoryExpense.index')->with(['lsCategoryExpense'=>$lsCategoryExpense, 'lscategory'=>$lscategory]);
     }
 
     /**
@@ -74,10 +77,14 @@ class CategoryExpenseController extends Controller
      * @param  \App\Models\categoryExpense  $categoryExpense
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+//        $ctexpense = \App\Models\CategoryExpense::find($id);
+//        return view('CategoryExpense.edit')->with('ctexpense', $ctexpense);
+
         $ctexpense = \App\Models\CategoryExpense::find($id);
-        return view('CategoryExpense.edit')->with('ctexpense', $ctexpense);
+        $request->session()->flash('success', 'Update successfully');
+        return view('CategoryExpense.edit', compact('ctexpense'))->with('ctexpense', $ctexpense);
     }
 
     /**
@@ -100,7 +107,7 @@ class CategoryExpenseController extends Controller
         $ctexpense->name = $name;
         $ctexpense->subCategoryiD = $subCategoryiD;
         $ctexpense->save();
-        $result = 'Sua thanh cong';
+//        $result = 'Sua thanh cong';
 
         $request->session()->flash('success', 'Category Expense updated sucessfully.');
         return redirect(route('CategoryExpense.index'));
@@ -122,5 +129,9 @@ class CategoryExpenseController extends Controller
             $request->session()->flash('success', 'Category Expense deleted sucessfully.');
         }
         return redirect(route('CategoryExpense.index'));
+    }
+
+    public function getExpenseTest($id) {
+        return \App\Models\categoryExpense::where('id', $id)->get();
     }
 }

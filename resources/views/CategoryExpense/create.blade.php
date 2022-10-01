@@ -40,7 +40,7 @@
             endtest
             <div>
                 <input style="margin: 10px auto" type="submit" class="btn-warning" value="Cancel">
-                <input href="CategoryIncome.index" style="margin: 10px auto" type="submit" class="btn btn-primary " value="Save">
+                <input href="CategoryExpense.index" style="margin: 10px auto" type="submit" class="btn btn-primary " value="Save">
             </div>
 
         </form>
