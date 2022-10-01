@@ -37,4 +37,6 @@ Route::get('checkStartDate',[App\Http\Controllers\ExpenseLimitController::class,
 
 Route::resource("income", \App\Http\Controllers\IncomeController::class);
 Route::post('search',[App\Http\Controllers\IncomeController::class,'search'])->name('search');
+Route::post('search',[App\Http\Controllers\ExpenseController::class,'search'])->name('search');
+
 
